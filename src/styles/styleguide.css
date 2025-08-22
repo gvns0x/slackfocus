@@ -1,0 +1,306 @@
+/*
+ * CSS Styleguide for SlackFocus Application
+ * 
+ * This file contains all typography rules and utility classes for consistent text styling.
+ * All text styles are centralized here and should be used across all components.
+ */
+
+/* ==========================================================================
+   TYPOGRAPHY RULES
+   ========================================================================== */
+
+/*
+ * BODY TEXT
+ * - Font size: 14px
+ * - Font weight: Regular (400)
+ * - Color: #000000 with 80% opacity (rgba(0, 0, 0, 0.8))
+ * - Line height: 1.5
+ * - Use for: Paragraphs, descriptions, general content
+ */
+.text-body {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.8);
+  line-height: 1.5;
+}
+
+/*
+ * TITLES
+ * - Font size: 14px
+ * - Font weight: Bold (700)
+ * - Color: #000000 (100% opacity)
+ * - Line height: 1.25
+ * - Use for: Section titles, important headings, labels
+ */
+.text-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #000000;
+  line-height: 1.25;
+}
+
+/*
+ * SECTION HEADERS (CHANNELS, DIRECT MESSAGES)
+ * - Font size: 11px
+ * - Font weight: Semibold (600)
+ * - Text transform: Uppercase
+ * - Letter spacing: 0.5px
+ * - Color: #6c757d
+ * - Line height: 1.2
+ * - Use for: Navigation section headers
+ */
+.text-section-header {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #6c757d;
+  line-height: 1.2;
+}
+
+/*
+ * CHANNEL NAMES
+ * - Font size: 14px
+ * - Font weight: Medium (500)
+ * - Color: #495057
+ * - Line height: 1.4
+ * - Use for: Channel names in sidebar
+ */
+.text-channel-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #495057;
+  line-height: 1.4;
+}
+
+/*
+ * USER NAMES
+ * - Font size: 13px
+ * - Font weight: Medium (500)
+ * - Color: #495057
+ * - Line height: 1.4
+ * - Use for: User names in direct messages
+ */
+.text-user-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: #495057;
+  line-height: 1.4;
+}
+
+/*
+ * WORKSPACE NAME
+ * - Font size: 16px
+ * - Font weight: Semibold (600)
+ * - Color: #333333
+ * - Line height: 1.25
+ * - Use for: Workspace name in header
+ */
+.text-workspace-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333333;
+  line-height: 1.25;
+}
+
+/*
+ * MODAL TITLES
+ * - Font size: 18px
+ * - Font weight: Bold (700)
+ * - Color: #000000
+ * - Line height: 1.2
+ * - Use for: Modal and dialog titles
+ */
+.text-modal-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #000000;
+  line-height: 1.2;
+}
+
+/*
+ * TOPIC NAMES
+ * - Font size: 16px
+ * - Font weight: Semibold (600)
+ * - Color: #000000
+ * - Line height: 1.25
+ * - Use for: Focus topic names
+ */
+.text-topic-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #000000;
+  line-height: 1.25;
+}
+
+/*
+ * TOPIC DESCRIPTIONS
+ * - Font size: 14px
+ * - Font weight: Regular (400)
+ * - Color: rgba(0, 0, 0, 0.8)
+ * - Line height: 1.5
+ * - Use for: Focus topic descriptions
+ */
+.text-topic-description {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.8);
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   UTILITY CLASSES
+   ========================================================================== */
+
+/* Font Weight Utilities */
+.text-light { font-weight: 300; }
+.text-normal { font-weight: 400; }
+.text-medium { font-weight: 500; }
+.text-semibold { font-weight: 600; }
+.text-bold { font-weight: 700; }
+
+/* Font Size Utilities */
+.text-xs { font-size: 12px; }
+.text-sm { font-size: 14px; }
+.text-base { font-size: 16px; }
+.text-lg { font-size: 18px; }
+.text-xl { font-size: 20px; }
+.text-2xl { font-size: 24px; }
+
+/* Text Color Utilities */
+.text-black { color: #000000; }
+.text-gray-600 { color: #6c757d; }
+.text-gray-700 { color: #495057; }
+.text-gray-800 { color: #333333; }
+.text-opacity-80 { color: rgba(0, 0, 0, 0.8); }
+
+/* Text Transform Utilities */
+.text-uppercase { text-transform: uppercase; }
+.text-lowercase { text-transform: lowercase; }
+.text-capitalize { text-transform: capitalize; }
+
+/* Letter Spacing Utilities */
+.tracking-wide { letter-spacing: 0.5px; }
+.tracking-normal { letter-spacing: normal; }
+
+/* Line Height Utilities */
+.leading-tight { line-height: 1.25; }
+.leading-normal { line-height: 1.5; }
+.leading-relaxed { line-height: 1.75; }
+
+/* ==========================================================================
+   COMPONENT-SPECIFIC STYLES
+   ========================================================================== */
+
+/* Sidebar Section Headers */
+.sidebar-section-header {
+  composes: text-section-header;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px 12px;
+}
+
+/* Channel Items */
+.channel-item-text {
+  composes: text-channel-name;
+  transition: color 0.2s ease;
+}
+
+.channel-item-text:hover {
+  color: #333333;
+}
+
+.channel-item-text.active {
+  color: #1976d2;
+}
+
+/* User Items */
+.user-item-text {
+  composes: text-user-name;
+  transition: color 0.2s ease;
+}
+
+.user-item-text:hover {
+  color: #333333;
+}
+
+/* Focus Mode Button */
+.focus-mode-button-text {
+  composes: text-body;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+/* Modal Content */
+.modal-description {
+  composes: text-body;
+  margin-bottom: 24px;
+}
+
+/* Topic Cards */
+.topic-card-title {
+  composes: text-topic-name;
+  margin-bottom: 8px;
+}
+
+.topic-card-description {
+  composes: text-topic-description;
+  margin-bottom: 16px;
+}
+
+/* ==========================================================================
+   RESPONSIVE TYPOGRAPHY
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .text-modal-title {
+    font-size: 16px;
+  }
+  
+  .text-topic-name {
+    font-size: 14px;
+  }
+  
+  .text-workspace-name {
+    font-size: 14px;
+  }
+}
+
+/* ==========================================================================
+   DARK THEME SUPPORT
+   ========================================================================== */
+
+@media (prefers-color-scheme: dark) {
+  .text-body {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  .text-title {
+    color: #ffffff;
+  }
+  
+  .text-topic-name {
+    color: #ffffff;
+  }
+  
+  .text-modal-title {
+    color: #ffffff;
+  }
+  
+  .text-channel-name {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  .text-user-name {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  .text-workspace-name {
+    color: #ffffff;
+  }
+  
+  .text-topic-description {
+    color: rgba(255, 255, 255, 0.8);
+  }
+}

@@ -26,13 +26,18 @@ const Sidebar = ({ channels, currentChannel, onChannelChange }) => {
         <div className="sidebar-content">
           {!isFocusMode && (
             <div className="focus-section">
-              <button 
-                className="focus-mode-btn"
-                onClick={() => setShowFocusSelector(true)}
-              >
-                <span className="focus-btn-icon">🎯</span>
-                <span className="focus-btn-text">Enter Focus Mode</span>
-              </button>
+              <div className="focus-banner">
+                <div className="focus-banner-content">
+                  <span className="focus-banner-icon">🎯</span>
+                  <span className="focus-banner-text">Focus on</span>
+                  <button 
+                    className="focus-dropdown-btn"
+                    onClick={() => setShowFocusSelector(true)}
+                  >
+                    <span className="dropdown-chevron">▼</span>
+                  </button>
+                </div>
+              </div>
             </div>
           )}
           

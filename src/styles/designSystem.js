@@ -23,12 +23,19 @@ export const designSystem = {
       green: '#00ff66',
     },
     
-    // Text Colors
+    // Text Colors - Updated according to styleguide
     text: {
-      primary: '#ffffff',
-      secondary: 'rgba(255, 255, 255, 0.8)',
-      tertiary: 'rgba(255, 255, 255, 0.6)',
-      muted: 'rgba(255, 255, 255, 0.4)',
+      primary: '#000000', // 100% opacity for titles
+      secondary: 'rgba(0, 0, 0, 0.8)', // 80% opacity for body text
+      tertiary: 'rgba(0, 0, 0, 0.6)',
+      muted: 'rgba(0, 0, 0, 0.4)',
+      // Legacy white text colors for dark themes
+      white: {
+        primary: '#ffffff',
+        secondary: 'rgba(255, 255, 255, 0.8)',
+        tertiary: 'rgba(255, 255, 255, 0.6)',
+        muted: 'rgba(255, 255, 255, 0.4)',
+      }
     },
     
     // Gradients
@@ -53,7 +60,7 @@ export const designSystem = {
     }
   },
   
-  // Typography
+  // Typography - Updated according to styleguide
   typography: {
     fontFamily: {
       primary: '"SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
@@ -61,28 +68,105 @@ export const designSystem = {
     },
     
     fontSize: {
-      xs: '0.75rem',
-      sm: '0.875rem',
-      base: '1rem',
-      lg: '1.125rem',
-      xl: '1.25rem',
-      '2xl': '1.5rem',
-      '3xl': '1.875rem',
-      '4xl': '2.25rem',
+      xs: '0.75rem', // 12px
+      sm: '0.875rem', // 14px - Base size for body text and titles
+      base: '1rem', // 16px
+      lg: '1.125rem', // 18px
+      xl: '1.25rem', // 20px
+      '2xl': '1.5rem', // 24px
+      '3xl': '1.875rem', // 30px
+      '4xl': '2.25rem', // 36px
     },
     
     fontWeight: {
       light: 300,
-      normal: 400,
+      normal: 400, // Regular weight for body text
       medium: 500,
       semibold: 600,
-      bold: 700,
+      bold: 700, // Bold weight for titles
     },
     
     lineHeight: {
       tight: 1.25,
       normal: 1.5,
       relaxed: 1.75,
+    },
+
+    // Typography Styles according to styleguide
+    styles: {
+      // Body text: 14px regular, #000 with 80% opacity
+      body: {
+        fontSize: '14px',
+        fontWeight: 400,
+        color: 'rgba(0, 0, 0, 0.8)',
+        lineHeight: 1.5,
+      },
+      
+      // Titles: 14px bold, #000, 100% opacity
+      title: {
+        fontSize: '14px',
+        fontWeight: 700,
+        color: '#000000',
+        lineHeight: 1.25,
+      },
+      
+      // Section headers (CHANNELS, DIRECT MESSAGES): 11px semibold, uppercase, letter-spacing
+      sectionHeader: {
+        fontSize: '11px',
+        fontWeight: 600,
+        textTransform: 'uppercase',
+        letterSpacing: '0.5px',
+        color: '#6c757d',
+        lineHeight: 1.2,
+      },
+      
+      // Channel names: 14px medium weight
+      channelName: {
+        fontSize: '14px',
+        fontWeight: 500,
+        color: '#495057',
+        lineHeight: 1.4,
+      },
+      
+      // User names: 13px medium weight
+      userName: {
+        fontSize: '13px',
+        fontWeight: 500,
+        color: '#495057',
+        lineHeight: 1.4,
+      },
+      
+      // Workspace name: 16px semibold
+      workspaceName: {
+        fontSize: '16px',
+        fontWeight: 600,
+        color: '#333333',
+        lineHeight: 1.25,
+      },
+      
+      // Modal titles: 18px bold
+      modalTitle: {
+        fontSize: '18px',
+        fontWeight: 700,
+        color: '#000000',
+        lineHeight: 1.2,
+      },
+      
+      // Topic names: 16px semibold
+      topicName: {
+        fontSize: '16px',
+        fontWeight: 600,
+        color: '#000000',
+        lineHeight: 1.25,
+      },
+      
+      // Topic descriptions: 14px regular
+      topicDescription: {
+        fontSize: '14px',
+        fontWeight: 400,
+        color: 'rgba(0, 0, 0, 0.8)',
+        lineHeight: 1.5,
+      }
     }
   },
   
@@ -169,10 +253,17 @@ export const cssVariables = `
     --color-iridescent-purple: ${designSystem.colors.iridescent.purple};
     --color-iridescent-green: ${designSystem.colors.iridescent.green};
     
+    /* Updated Text Colors according to styleguide */
     --color-text-primary: ${designSystem.colors.text.primary};
     --color-text-secondary: ${designSystem.colors.text.secondary};
     --color-text-tertiary: ${designSystem.colors.text.tertiary};
     --color-text-muted: ${designSystem.colors.text.muted};
+    
+    /* Legacy white text colors for dark themes */
+    --color-text-white-primary: ${designSystem.colors.text.white.primary};
+    --color-text-white-secondary: ${designSystem.colors.text.white.secondary};
+    --color-text-white-tertiary: ${designSystem.colors.text.white.tertiary};
+    --color-text-white-muted: ${designSystem.colors.text.white.muted};
     
     --color-border-glass: ${designSystem.colors.borders.glass};
     --color-border-iridescent: ${designSystem.colors.borders.iridescent};
@@ -205,6 +296,54 @@ export const cssVariables = `
     --line-height-normal: ${designSystem.typography.lineHeight.normal};
     --line-height-relaxed: ${designSystem.typography.lineHeight.relaxed};
     
+    /* Typography Styles */
+    --text-body-font-size: ${designSystem.typography.styles.body.fontSize};
+    --text-body-font-weight: ${designSystem.typography.styles.body.fontWeight};
+    --text-body-color: ${designSystem.typography.styles.body.color};
+    --text-body-line-height: ${designSystem.typography.styles.body.lineHeight};
+    
+    --text-title-font-size: ${designSystem.typography.styles.title.fontSize};
+    --text-title-font-weight: ${designSystem.typography.styles.title.fontWeight};
+    --text-title-color: ${designSystem.typography.styles.title.color};
+    --text-title-line-height: ${designSystem.typography.styles.title.lineHeight};
+    
+    --text-section-header-font-size: ${designSystem.typography.styles.sectionHeader.fontSize};
+    --text-section-header-font-weight: ${designSystem.typography.styles.sectionHeader.fontWeight};
+    --text-section-header-text-transform: ${designSystem.typography.styles.sectionHeader.textTransform};
+    --text-section-header-letter-spacing: ${designSystem.typography.styles.sectionHeader.letterSpacing};
+    --text-section-header-color: ${designSystem.typography.styles.sectionHeader.color};
+    --text-section-header-line-height: ${designSystem.typography.styles.sectionHeader.lineHeight};
+    
+    --text-channel-name-font-size: ${designSystem.typography.styles.channelName.fontSize};
+    --text-channel-name-font-weight: ${designSystem.typography.styles.channelName.fontWeight};
+    --text-channel-name-color: ${designSystem.typography.styles.channelName.color};
+    --text-channel-name-line-height: ${designSystem.typography.styles.channelName.lineHeight};
+    
+    --text-user-name-font-size: ${designSystem.typography.styles.userName.fontSize};
+    --text-user-name-font-weight: ${designSystem.typography.styles.userName.fontWeight};
+    --text-user-name-color: ${designSystem.typography.styles.userName.color};
+    --text-user-name-line-height: ${designSystem.typography.styles.userName.lineHeight};
+    
+    --text-workspace-name-font-size: ${designSystem.typography.styles.workspaceName.fontSize};
+    --text-workspace-name-font-weight: ${designSystem.typography.styles.workspaceName.fontWeight};
+    --text-workspace-name-color: ${designSystem.typography.styles.workspaceName.color};
+    --text-workspace-name-line-height: ${designSystem.typography.styles.workspaceName.lineHeight};
+    
+    --text-modal-title-font-size: ${designSystem.typography.styles.modalTitle.fontSize};
+    --text-modal-title-font-weight: ${designSystem.typography.styles.modalTitle.fontWeight};
+    --text-modal-title-color: ${designSystem.typography.styles.modalTitle.color};
+    --text-modal-title-line-height: ${designSystem.typography.styles.modalTitle.lineHeight};
+    
+    --text-topic-name-font-size: ${designSystem.typography.styles.topicName.fontSize};
+    --text-topic-name-font-weight: ${designSystem.typography.styles.topicName.fontWeight};
+    --text-topic-name-color: ${designSystem.typography.styles.topicName.color};
+    --text-topic-name-line-height: ${designSystem.typography.styles.topicName.lineHeight};
+    
+    --text-topic-description-font-size: ${designSystem.typography.styles.topicDescription.fontSize};
+    --text-topic-description-font-weight: ${designSystem.typography.styles.topicDescription.fontWeight};
+    --text-topic-description-color: ${designSystem.typography.styles.topicDescription.color};
+    --text-topic-description-line-height: ${designSystem.typography.styles.topicDescription.lineHeight};
+    
     /* Spacing */
     --spacing-xs: ${designSystem.spacing.xs};
     --spacing-sm: ${designSystem.spacing.sm};
@@ -228,6 +367,83 @@ export const cssVariables = `
     --transition-normal: ${designSystem.transitions.normal};
     --transition-slow: ${designSystem.transitions.slow};
     --transition-bounce: ${designSystem.transitions.bounce};
+  }
+`;
+
+// Utility classes for typography
+export const typographyClasses = `
+  /* Body Text - 14px regular, #000 with 80% opacity */
+  .text-body {
+    font-size: var(--text-body-font-size);
+    font-weight: var(--text-body-font-weight);
+    color: var(--text-body-color);
+    line-height: var(--text-body-line-height);
+  }
+  
+  /* Titles - 14px bold, #000, 100% opacity */
+  .text-title {
+    font-size: var(--text-title-font-size);
+    font-weight: var(--text-title-font-weight);
+    color: var(--text-title-color);
+    line-height: var(--text-title-line-height);
+  }
+  
+  /* Section Headers (CHANNELS, DIRECT MESSAGES) - 11px semibold, uppercase, letter-spacing */
+  .text-section-header {
+    font-size: var(--text-section-header-font-size);
+    font-weight: var(--text-section-header-font-weight);
+    text-transform: var(--text-section-header-text-transform);
+    letter-spacing: var(--text-section-header-letter-spacing);
+    color: var(--text-section-header-color);
+    line-height: var(--text-section-header-line-height);
+  }
+  
+  /* Channel Names - 14px medium weight */
+  .text-channel-name {
+    font-size: var(--text-channel-name-font-size);
+    font-weight: var(--text-channel-name-font-weight);
+    color: var(--text-channel-name-color);
+    line-height: var(--text-channel-name-line-height);
+  }
+  
+  /* User Names - 13px medium weight */
+  .text-user-name {
+    font-size: var(--text-user-name-font-size);
+    font-weight: var(--text-user-name-font-weight);
+    color: var(--text-user-name-color);
+    line-height: var(--text-user-name-line-height);
+  }
+  
+  /* Workspace Name - 16px semibold */
+  .text-workspace-name {
+    font-size: var(--text-workspace-name-font-size);
+    font-weight: var(--text-workspace-name-font-weight);
+    color: var(--text-workspace-name-color);
+    line-height: var(--text-workspace-name-line-height);
+  }
+  
+  /* Modal Titles - 18px bold */
+  .text-modal-title {
+    font-size: var(--text-modal-title-font-size);
+    font-weight: var(--text-modal-title-font-weight);
+    color: var(--text-modal-title-color);
+    line-height: var(--text-modal-title-line-height);
+  }
+  
+  /* Topic Names - 16px semibold */
+  .text-topic-name {
+    font-size: var(--text-topic-name-font-size);
+    font-weight: var(--text-topic-name-font-weight);
+    color: var(--text-topic-name-color);
+    line-height: var(--text-topic-name-line-height);
+  }
+  
+  /* Topic Descriptions - 14px regular */
+  .text-topic-description {
+    font-size: var(--text-topic-description-font-size);
+    font-weight: var(--text-topic-description-font-weight);
+    color: var(--text-topic-description-color);
+    line-height: var(--text-topic-description-line-height);
   }
 `;
 

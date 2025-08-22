@@ -34,17 +34,10 @@ const ChatArea = ({ channel, messages, onSendMessage }) => {
         <div className="channel-info">
           <span className="channel-hash">#</span>
           <span className="channel-name">{channel}</span>
-          <span className="channel-topic">Company-wide announcements and work-based matters</span>
         </div>
         <div className="header-actions">
           <button className="header-button">
-            <span className="icon">📌</span>
-          </button>
-          <button className="header-button">
-            <span className="icon">👥</span>
-          </button>
-          <button className="header-button">
-            <span className="icon">⚙️</span>
+            <span className="icon">⋯</span>
           </button>
         </div>
       </div>
@@ -81,12 +74,15 @@ const ChatArea = ({ channel, messages, onSendMessage }) => {
               className="message-input"
             />
             <div className="input-actions">
-              <button type="button" className="input-button">
-                <span className="icon">😊</span>
-              </button>
-              <button type="button" className="input-button">
-                <span className="icon">📎</span>
-              </button>
+              {newMessage.trim() ? (
+                <button type="submit" className="input-button">
+                  <span className="icon">➤</span>
+                </button>
+              ) : (
+                <button type="button" className="input-button">
+                  <span className="icon">📎</span>
+                </button>
+              )}
             </div>
           </div>
         </form>
