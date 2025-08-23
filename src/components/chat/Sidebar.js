@@ -5,17 +5,14 @@ import './Sidebar.css';
 
 const Sidebar = ({ channels, currentChannel, onChannelChange, onFocusButtonClick, onFocusButtonHover }) => {
   const { isFocusMode, currentFocus } = useFocus();
-  const [isHoveringFocus, setIsHoveringFocus] = useState(false);
 
   const handleFocusButtonMouseEnter = () => {
-    setIsHoveringFocus(true);
     if (onFocusButtonHover) {
       onFocusButtonHover(true);
     }
   };
 
   const handleFocusButtonMouseLeave = () => {
-    setIsHoveringFocus(false);
     if (onFocusButtonHover) {
       onFocusButtonHover(false);
     }

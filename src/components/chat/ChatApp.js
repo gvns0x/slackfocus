@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import ChatArea from './ChatArea';
 import FocusMode from './FocusMode';
+import ProjectSearchModal from './ProjectSearchModal';
 import { FocusProvider, useFocus } from '../../contexts/FocusContext';
 import './ChatApp.css';
 
 function ChatAppContent() {
   const [currentChannel, setCurrentChannel] = useState('general');
+  const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
   const { isFocusMode } = useFocus();
   const [messages, setMessages] = useState({
     general: [
@@ -59,6 +61,7 @@ function ChatAppContent() {
         channels={channels} 
         currentChannel={currentChannel} 
         onChannelChange={setCurrentChannel}
+        onFocusButtonClick={() => setIsProjectModalOpen(true)}
       />
       {isFocusMode ? (
         <FocusMode 
@@ -72,6 +75,10 @@ function ChatAppContent() {
           onSendMessage={addMessage}
         />
       )}
+      <ProjectSearchModal 
+        isOpen={isProjectModalOpen}
+        onClose={() => setIsProjectModalOpen(false)}
+      />
     </div>
   );
 }
