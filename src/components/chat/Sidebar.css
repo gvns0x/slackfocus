@@ -181,6 +181,7 @@
 
 .channel-item:hover {
   background: rgba(0,0,0,0.035);
+  cursor: no-drop;
 }
 
 .channel-item.active {
@@ -243,6 +244,7 @@
 
 .dm-item:hover {
   background-color: rgba(0,0,0,0.035);
+  cursor: no-drop;
 }
 
 /* Avatar styles are now handled by the Avatar component */
@@ -290,6 +292,7 @@
 
 .user-profile:hover {
   background: rgba(0, 0, 0, 0.03);
+  cursor: no-drop;
 }
 
 .user-profile .user-avatar {
