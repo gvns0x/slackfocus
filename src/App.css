@@ -25,7 +25,7 @@ body {
 .app {
   display: flex;
   height: 100vh;
-  background: linear-gradient(45deg, #FF6B6B, #4ECDC4, #45B7D1);
+  /*  */
   position: relative;
   justify-content: center;
   align-items: center;
