@@ -24,16 +24,11 @@
 }
 
 .modal-header {
-  padding: 24px 24px 16px;
+  padding: 8px 8px 16px;
   border-bottom: 1px solid #e9ecef;
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.modal-header h2 {
-  composes: text-modal-title;
-  margin: 0;
 }
 
 .close-btn {

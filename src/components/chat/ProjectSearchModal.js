@@ -75,25 +75,27 @@ const ProjectSearchModal = ({ isOpen, onClose }) => {
           <div className="projects-section">
             <h2>Finding your projects</h2>
             
-            {isLoading ? (
-              <div className="skeleton-container">
-                {[...Array(5)].map((_, index) => (
-                  <div key={index} className="skeleton-row">
-                    <div className="skeleton-header"></div>
-                    <div className="skeleton-description"></div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="projects-list">
-                {filteredProjects.map(project => (
-                  <div key={project.id} className="project-row">
-                    <div className="project-header">{project.name}</div>
-                    <div className="project-description">{project.description}</div>
-                  </div>
-                ))}
-              </div>
-            )}
+            <div className="scrollable-content">
+              {isLoading ? (
+                <div className="skeleton-container">
+                  {[...Array(8)].map((_, index) => (
+                    <div key={index} className="skeleton-row">
+                      <div className="skeleton-header"></div>
+                      <div className="skeleton-description"></div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="projects-list">
+                  {filteredProjects.map(project => (
+                    <div key={project.id} className="project-row">
+                      <div className="project-header">{project.name}</div>
+                      <div className="project-description">{project.description}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
