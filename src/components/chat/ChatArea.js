@@ -48,15 +48,10 @@ const ChatArea = ({ channel, messages, onSendMessage }) => {
         
         <div className="focusing-container">
           <div className="focusing-content">
-            <h2 className="focusing-title">Focusing on</h2>
-            <h1 className="focusing-project-name">{selectedProject.name}</h1>
-            <p className="focusing-description">{selectedProject.description}</p>
-            {isLoading && (
-              <div className="focusing-loading">
-                <div className="loading-spinner"></div>
-                <span>Loading project context...</span>
-              </div>
-            )}
+            <h1 className="focusing-title">Focusing on {selectedProject.name}</h1>
+            <p className="focusing-description loading-text">
+              {isLoading ? 'Finding relevant channels' : 'Grouping related people'}
+            </p>
           </div>
         </div>
       </div>
