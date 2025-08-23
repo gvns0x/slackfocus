@@ -46,8 +46,8 @@ const ChatArea = ({ channel, messages, onSendMessage }) => {
         <div className="messages">
           {messages.map((message, index) => (
             <div key={message.id} className="message">
-              <div className="message-avatar">
-                <Avatar userInitials={message.avatar} size="medium" />
+              <div className="message-avatar" >
+                <Avatar userInitials={message.avatar} size="small" />
               </div>
               <div className="message-content">
                 <div className="message-header">

@@ -26,7 +26,7 @@ export const FocusProvider = ({ children }) => {
       ],
       people: [
         { name: 'Sarah Chen', role: 'Product Manager', avatar: 'SC', help: 'Can provide updates on launch timeline and coordinate with stakeholders' },
-        { name: 'Mike Johnson', name: 'Mike Johnson', role: 'Marketing Lead', avatar: 'MJ', help: 'Responsible for marketing strategy and promotional campaigns' },
+        { name: 'Mike Johnson', role: 'Marketing Lead', avatar: 'MJ', help: 'Responsible for marketing strategy and promotional campaigns' },
         { name: 'Alex Rodriguez', role: 'Engineering Lead', avatar: 'AR', help: 'Can answer technical questions about product features and implementation' }
       ]
     },
