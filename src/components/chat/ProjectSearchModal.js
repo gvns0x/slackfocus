@@ -5,6 +5,36 @@ const ProjectSearchModal = ({ isOpen, onClose }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [projects, setProjects] = useState([]);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  // Handle ESC key press
+  useEffect(() => {
+    const handleEscKey = (event) => {
+      if (event.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscKey);
+      // Prevent body scroll when modal is open
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscKey);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen, onClose]);
+
+  // Handle animation states
+  useEffect(() => {
+    if (isOpen) {
+      setIsAnimating(true);
+    } else {
+      setIsAnimating(false);
+    }
+  }, [isOpen]);
 
   // Simulate loading projects
   useEffect(() => {
@@ -51,11 +81,11 @@ const ProjectSearchModal = ({ isOpen, onClose }) => {
     project.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  if (!isOpen) return null;
+  if (!isOpen && !isAnimating) return null;
 
   return (
-    <div className="project-search-modal-overlay" onClick={onClose}>
-      <div className="project-search-modal" onClick={(e) => e.stopPropagation()}>
+    <div className={`project-search-modal-overlay ${isOpen ? 'modal-open' : 'modal-closing'}`} onClick={onClose}>
+      <div className={`project-search-modal ${isOpen ? 'modal-content-open' : 'modal-content-closing'}`} onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h1>Focus on</h1>
           <button className="close-button" onClick={onClose}>×</button>
