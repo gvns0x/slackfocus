@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useFocus } from '../../contexts/FocusContext';
 import Avatar from '../common/Avatar';
 import './ChatArea.css';
 
 const ChatArea = ({ channel, messages, onSendMessage }) => {
   const [newMessage, setNewMessage] = useState('');
   const messagesEndRef = useRef(null);
+  const { selectedProject, isLoading } = useFocus();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -28,6 +30,39 @@ const ChatArea = ({ channel, messages, onSendMessage }) => {
       handleSubmit(e);
     }
   };
+
+  // Show focusing state when a project is selected
+  if (selectedProject) {
+    return (
+      <div className="chat-area">
+        <div className="chat-header">
+          <div className="channel-info">
+            <span className="channel-name">Focus Mode</span>
+          </div>
+          <div className="header-actions">
+            <button className="header-button">
+              <span className="icon">⋯</span>
+            </button>
+          </div>
+        </div>
+        
+        <div className="focusing-container">
+          <div className="focusing-content">
+            <div className="focusing-icon">🎯</div>
+            <h2 className="focusing-title">Focusing on</h2>
+            <h1 className="focusing-project-name">{selectedProject.name}</h1>
+            <p className="focusing-description">{selectedProject.description}</p>
+            {isLoading && (
+              <div className="focusing-loading">
+                <div className="loading-spinner"></div>
+                <span>Loading project context...</span>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="chat-area">

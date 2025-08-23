@@ -9,7 +9,7 @@ import './ChatApp.css';
 function ChatAppContent() {
   const [currentChannel, setCurrentChannel] = useState('general');
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
-  const { isFocusMode } = useFocus();
+  const { isFocusMode, selectedProject, getProjectData } = useFocus();
   const [messages, setMessages] = useState({
     general: [
       { id: 1, user: 'Sarah Chen', text: 'Good morning everyone! 👋', timestamp: '9:30 AM', avatar: 'SC' },
@@ -33,7 +33,9 @@ function ChatAppContent() {
     ]
   });
 
-  const channels = [
+  // Get project-specific data
+  const projectData = selectedProject ? getProjectData(selectedProject.id) : null;
+  const channels = projectData ? projectData.channels : [
     { id: 'general', name: 'general', unread: 0 },
     { id: 'random', name: 'random', unread: 2 },
     { id: 'announcements', name: 'announcements', unread: 0 },
@@ -62,8 +64,15 @@ function ChatAppContent() {
         currentChannel={currentChannel} 
         onChannelChange={setCurrentChannel}
         onFocusButtonClick={() => setIsProjectModalOpen(true)}
+        projectData={projectData}
       />
-      {isFocusMode ? (
+      {selectedProject ? (
+        <ChatArea 
+          channel={currentChannel}
+          messages={messages[currentChannel] || []}
+          onSendMessage={addMessage}
+        />
+      ) : isFocusMode ? (
         <FocusMode 
           onChannelChange={setCurrentChannel}
           currentChannel={currentChannel}

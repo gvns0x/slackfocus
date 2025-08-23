@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useFocus } from '../../contexts/FocusContext';
 import './ProjectSearchModal.css';
 
 const ProjectSearchModal = ({ isOpen, onClose }) => {
@@ -7,6 +8,7 @@ const ProjectSearchModal = ({ isOpen, onClose }) => {
   const [projects, setProjects] = useState([]);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isInitialBlur, setIsInitialBlur] = useState(false);
+  const { selectProject } = useFocus();
 
   // Handle ESC key press
   useEffect(() => {
@@ -66,16 +68,6 @@ const ProjectSearchModal = ({ isOpen, onClose }) => {
             id: 3,
             name: 'Database Migration',
             description: 'Migration from legacy database system to new cloud-based solution with zero downtime'
-          },
-          {
-            id: 4,
-            name: 'Customer Support Portal',
-            description: 'New self-service portal for customers to submit tickets and track their resolution status'
-          },
-          {
-            id: 5,
-            name: 'Analytics Dashboard',
-            description: 'Real-time analytics dashboard for tracking key business metrics and performance indicators'
           }
         ]);
         setIsLoading(false);
@@ -84,6 +76,11 @@ const ProjectSearchModal = ({ isOpen, onClose }) => {
       return () => clearTimeout(timer);
     }
   }, [isOpen]);
+
+  const handleProjectSelect = (project) => {
+    selectProject(project);
+    onClose();
+  };
 
   const filteredProjects = projects.filter(project =>
     project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -129,7 +126,11 @@ const ProjectSearchModal = ({ isOpen, onClose }) => {
               ) : (
                 <div className="projects-list">
                   {filteredProjects.map(project => (
-                    <div key={project.id} className="project-row">
+                    <div 
+                      key={project.id} 
+                      className="project-row"
+                      onClick={() => handleProjectSelect(project)}
+                    >
                       <div className="project-header">{project.name}</div>
                       <div className="project-description">{project.description}</div>
                     </div>

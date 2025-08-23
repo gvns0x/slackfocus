@@ -13,6 +13,8 @@ export const useFocus = () => {
 export const FocusProvider = ({ children }) => {
   const [isFocusMode, setIsFocusMode] = useState(false);
   const [currentFocus, setCurrentFocus] = useState(null);
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [focusTopics] = useState([
     {
       id: 'product-launch',
@@ -73,14 +75,77 @@ export const FocusProvider = ({ children }) => {
   const exitFocusMode = () => {
     setIsFocusMode(false);
     setCurrentFocus(null);
+    setSelectedProject(null);
+  };
+
+  const selectProject = (project) => {
+    setIsLoading(true);
+    setSelectedProject(project);
+    setIsFocusMode(true);
+    
+    // Simulate loading time for skeleton animation
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  };
+
+  // Project-specific data
+  const getProjectData = (projectId) => {
+    const projectData = {
+      1: { // Product Launch Campaign
+        channels: [
+          { id: 'marketing', name: 'marketing', unread: 0 },
+          { id: 'product-launch', name: 'product-launch', unread: 2 },
+          { id: 'social-media', name: 'social-media', unread: 1 },
+          { id: 'email-campaigns', name: 'email-campaigns', unread: 0 }
+        ],
+        people: [
+          { initials: 'SC', name: 'Sarah Chen', role: 'Product Manager' },
+          { initials: 'MJ', name: 'Mike Johnson', role: 'Marketing Lead' },
+          { initials: 'EW', name: 'Emma Wilson', role: 'Social Media Manager' }
+        ]
+      },
+      2: { // Mobile App Redesign
+        channels: [
+          { id: 'design', name: 'design', unread: 0 },
+          { id: 'mobile-dev', name: 'mobile-dev', unread: 3 },
+          { id: 'ui-ux', name: 'ui-ux', unread: 1 },
+          { id: 'app-testing', name: 'app-testing', unread: 0 }
+        ],
+        people: [
+          { initials: 'AR', name: 'Alex Rodriguez', role: 'UI/UX Designer' },
+          { initials: 'DK', name: 'David Kim', role: 'Mobile Developer' },
+          { initials: 'LP', name: 'Lisa Park', role: 'Product Designer' }
+        ]
+      },
+      3: { // Database Migration
+        channels: [
+          { id: 'backend', name: 'backend', unread: 0 },
+          { id: 'database', name: 'database', unread: 5 },
+          { id: 'devops', name: 'devops', unread: 2 },
+          { id: 'migration', name: 'migration', unread: 1 }
+        ],
+        people: [
+          { initials: 'CB', name: 'Chris Brown', role: 'Backend Engineer' },
+          { initials: 'TH', name: 'Tom Hanks', role: 'DevOps Engineer' },
+          { initials: 'JS', name: 'Jennifer Smith', role: 'Database Admin' }
+        ]
+      }
+    };
+    
+    return projectData[projectId] || null;
   };
 
   const value = {
     isFocusMode,
     currentFocus,
+    selectedProject,
+    isLoading,
     focusTopics,
     enterFocusMode,
-    exitFocusMode
+    exitFocusMode,
+    selectProject,
+    getProjectData
   };
 
   return (

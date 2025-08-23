@@ -99,12 +99,12 @@
 }
 
 .focus-on-button {
-  background: #000;
+  background: rgba(0,0,0,0.3);
   color: #fff;
   border: 1px solid;
   border-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 100%) 1;
   border-radius: 8px;
-  padding: 8px 16px;
+  padding: 8px 8px 8px 16px;
   cursor: pointer;
   transition: all 0.2s ease;
   font-size: 13px;
@@ -112,10 +112,56 @@
   flex: 1;
   text-align: left;
   width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .focus-on-button:hover {
-  background: #333;
+  background: rgba(0,0,0,0.6);
+}
+
+.focus-on-button.focus-active {
+  background: #000000;
+}
+
+.focus-on-button.focus-active:hover {
+  background: rgba(0,0,0,0.8)
+}
+
+.focus-button-text {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
+}
+
+.exit-focus-button {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  transition: all 0.2s ease;
+  margin-left: 8px;
+  flex-shrink: 0;
+  opacity: 0;
+}
+
+.focus-on-button:hover .exit-focus-button {
+  opacity: 1;
+}
+
+.exit-focus-button:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .focus-dropdown-btn {
@@ -338,4 +384,62 @@
   font-size: 11px;
   color: #6c757d;
   font-weight: 400;
+}
+
+/* Skeleton Loading Styles */
+.skeleton-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  gap: 12px;
+  margin: 0 8px;
+  border-radius: 8px;
+  min-height: 35.5px; /* Match dm-item height: 8px padding top + 19.5px avatar + 8px padding bottom */
+}
+
+.skeleton-avatar {
+  width: 19.5px;
+  height: 19.5px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  flex-shrink: 0;
+}
+
+.skeleton-text {
+  flex: 1;
+  height: 14px; /* Match the approximate height of user-name text */
+  border-radius: 4px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+.skeleton-channel {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  gap: 12px;
+  margin: 0 8px;
+  border-radius: 8px;
+  min-height: 35.5px; /* Match channel-item height */
+}
+
+.skeleton-channel-text {
+  flex: 1;
+  height: 14px; /* Match the approximate height of channel-name text */
+  border-radius: 4px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }

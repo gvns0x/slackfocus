@@ -273,3 +273,90 @@
   background: #adb5bd;
   
 }
+
+/* Focusing State Styles */
+.focusing-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  padding: 40px;
+}
+
+.focusing-content {
+  text-align: center;
+  max-width: 400px;
+}
+
+.focusing-icon {
+  font-size: 48px;
+  margin-bottom: 24px;
+  animation: pulse 2s infinite;
+}
+
+.focusing-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #6c757d;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.focusing-project-name {
+  font-size: 32px;
+  font-weight: 700;
+  color: #333333;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.focusing-description {
+  font-size: 16px;
+  color: #6c757d;
+  line-height: 1.5;
+  margin-bottom: 32px;
+}
+
+.focusing-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.loading-spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #e9ecef;
+  border-top: 2px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.focusing-loading span {
+  font-size: 14px;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+  
