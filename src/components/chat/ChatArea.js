@@ -48,7 +48,6 @@ const ChatArea = ({ channel, messages, onSendMessage }) => {
         
         <div className="focusing-container">
           <div className="focusing-content">
-            <div className="focusing-icon">🎯</div>
             <h2 className="focusing-title">Focusing on</h2>
             <h1 className="focusing-project-name">{selectedProject.name}</h1>
             <p className="focusing-description">{selectedProject.description}</p>
