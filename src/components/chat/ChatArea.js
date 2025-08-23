@@ -79,9 +79,7 @@ const ChatArea = ({ channel, messages, onSendMessage }) => {
                   <span className="icon">➤</span>
                 </button>
               ) : (
-                <button type="button" className="input-button">
-                  <span className="icon">📎</span>
-                </button>
+                <span></span>
               )}
             </div>
           </div>

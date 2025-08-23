@@ -250,6 +250,7 @@
 .user-name {
   flex: 1;
   composes: text-user-name;
+  margin: 0;
 }
 
 .dm-item:hover .user-name {
@@ -292,8 +293,8 @@
 }
 
 .user-profile .user-avatar {
-  width: 28px;
-  height: 28px;
+
+
   background: rgba(0, 0, 0, 0.05);
   font-size: 10px;
   color: rgba(0,0,0,0.8);
@@ -305,9 +306,7 @@
 
 .user-info .user-name {
   composes: text-user-name;
-  font-weight: 600;
   color: #333333;
-  margin-bottom: 2px;
 }
 
 .user-status {
