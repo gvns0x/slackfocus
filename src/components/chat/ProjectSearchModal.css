@@ -12,7 +12,7 @@
 
 .project-search-modal {
   background: rgb(255, 255, 255,.9);
-  border-radius: 12px;
+  border-radius: 24px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
@@ -30,7 +30,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 16px;
+  padding: 16px;
   border-bottom: .5px solid rgba(0,0,0,0.1);
   position: relative;
   z-index: 10;
@@ -46,12 +46,14 @@
 .close-button {
   background: none;
   border: none;
-  font-size: 24px;
-  color: #6b7280;
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.6);
   cursor: pointer;
-  padding: 4px;
   border-radius: 4px;
   transition: background-color 0.2s ease;
+  width: 26px;
+  height: 26px;
+  font-weight: 400;
 }
 
 .close-button:hover {
@@ -60,7 +62,7 @@
 }
 
 .modal-content {
-  padding: 24px 8px;
+  padding: 24px 8px 0px 8px;
   flex: 1;
   overflow: hidden;
   display: flex;
@@ -122,6 +124,7 @@
   overflow-x: hidden;
   position: relative;
   z-index: 10;
+  padding-bottom: 16px;
 }
 
 
