@@ -19,7 +19,6 @@ const FocusMode = ({ onChannelChange, currentChannel }) => {
     <div className="focus-mode">
       <div className="focus-header">
         <div className="focus-indicator">
-          <div className="focus-icon">🎯</div>
           <div className="focus-info">
             <div className="focus-title">Focus Mode: {currentFocus.name}</div>
             <div className="focus-description">{currentFocus.description}</div>

@@ -32,7 +32,6 @@ const ChatArea = ({ channel, messages, onSendMessage }) => {
     <div className="chat-area">
       <div className="chat-header">
         <div className="channel-info">
-          <span className="channel-hash">#</span>
           <span className="channel-name">{channel}</span>
         </div>
         <div className="header-actions">

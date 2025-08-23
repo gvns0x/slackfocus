@@ -25,10 +25,8 @@ const Sidebar = ({ channels, currentChannel, onChannelChange }) => {
         
         <div className="sidebar-content">
           {!isFocusMode && (
-            <div className="focus-section">
               <div className="focus-banner">
                 <div className="focus-banner-content">
-                  <span className="focus-banner-icon">🎯</span>
                   <span className="focus-banner-text">Focus on</span>
                   <button 
                     className="focus-dropdown-btn"
@@ -38,7 +36,7 @@ const Sidebar = ({ channels, currentChannel, onChannelChange }) => {
                   </button>
                 </div>
               </div>
-            </div>
+
           )}
           
           <div className="sidebar-section">
@@ -54,11 +52,7 @@ const Sidebar = ({ channels, currentChannel, onChannelChange }) => {
                   className={`channel-item ${currentChannel === channel.id ? 'active' : ''}`}
                   onClick={() => onChannelChange(channel.id)}
                 >
-                  <span className="channel-hash">#</span>
                   <span className="channel-name">{channel.name}</span>
-                  {channel.unread > 0 && (
-                    <span className="unread-badge">{channel.unread}</span>
-                  )}
                 </div>
               ))}
             </div>
@@ -74,17 +68,14 @@ const Sidebar = ({ channels, currentChannel, onChannelChange }) => {
               <div className="dm-item">
                 <div className="user-avatar">SC</div>
                 <span className="user-name">Sarah Chen</span>
-                <div className="status-indicator online"></div>
               </div>
               <div className="dm-item">
                 <div className="user-avatar">MJ</div>
                 <span className="user-name">Mike Johnson</span>
-                <div className="status-indicator away"></div>
               </div>
               <div className="dm-item">
                 <div className="user-avatar">AR</div>
                 <span className="user-name">Alex Rodriguez</span>
-                <div className="status-indicator online"></div>
               </div>
             </div>
           </div>
@@ -95,7 +86,6 @@ const Sidebar = ({ channels, currentChannel, onChannelChange }) => {
             <div className="user-avatar">YO</div>
             <div className="user-info">
               <div className="user-name">You</div>
-              <div className="user-status">Online</div>
             </div>
           </div>
         </div>

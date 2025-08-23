@@ -6,12 +6,11 @@
   height: 100vh;
   background: #ffffff;
   border: 1px solid #e1e5e9;
-  border-radius: 8px;
+  border-radius: 24px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   margin: 20px auto;
   position: relative;
-  padding-left: 216px; /* 200px sidebar width + 8px left offset + 8px right offset */
 }
 
 
