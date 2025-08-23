@@ -168,6 +168,10 @@
   z-index: 1;
 }
 
+.message-input-container:hover {
+  cursor: no-drop;
+}
+
 .message-form {
   width: 100%;
 }
@@ -178,17 +182,13 @@
   align-items: center;
   background: #f8f9fa;
   border: 1px solid #e9ecef;
-  border-radius: 24px;
+  border-radius: 8px 8px 24px 8px;
   padding: 8px 16px;
-  transition: border-color 0.2s ease;
-}
-
-.input-wrapper:focus-within {
-  border-color: #007bff;
-  background: #ffffff;
+  /* Removed transition and focus-within styles to disable interaction */
 }
 
 .message-input {
+  height: 17.5px;
   flex: 1;
   border: none;
   outline: none;
@@ -199,6 +199,9 @@
   font-weight: 400;
   position: relative;
   z-index: 1;
+  /* Disabled interaction - input is now read-only */
+  pointer-events: none;
+  user-select: none;
 }
 
 .message-input::placeholder {
@@ -219,42 +222,38 @@
   border: 1px solid #e9ecef;
   padding: 6px;
   border-radius: 24px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+  /* Removed cursor and transition to disable interaction */
   display: flex;
   align-items: center;
   justify-content: center;
   width: 28px;
   height: 28px;
+  /* Disabled interaction */
+  pointer-events: none;
+  user-select: none;
 }
 
-.input-button:hover {
-  background: #e9ecef;
-}
+/* Removed hover state */
 
 .input-button .icon {
   font-size: 14px;
   color: #6c757d;
-  transition: color 0.2s ease;
-}
-
-.input-button:hover .icon {
-  color: #007bff;
+  /* Removed transition and hover state */
 }
 
 .input-button[type="submit"] {
   background: #007bff;
   border-color: #007bff;
+  /* Disabled interaction */
+  pointer-events: none;
+  user-select: none;
 }
 
 .input-button[type="submit"] .icon {
   color: #ffffff;
 }
 
-.input-button[type="submit"]:hover {
-  background: #0056b3;
-  border-color: #0056b3;
-}
+/* Removed hover state for submit button */
 
 /* Scrollbar styling for messages */
 .messages-container::-webkit-scrollbar {
@@ -272,4 +271,5 @@
 
 .messages-container::-webkit-scrollbar-thumb:hover {
   background: #adb5bd;
+  
 }

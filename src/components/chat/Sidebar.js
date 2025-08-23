@@ -18,7 +18,6 @@ const Sidebar = ({ channels, currentChannel, onChannelChange }) => {
           </div>
           {isFocusMode && (
             <div className="focus-indicator-small">
-              <span className="focus-icon-small">🎯</span>
               <span className="focus-text">{currentFocus.name}</span>
             </div>
           )}
@@ -28,12 +27,11 @@ const Sidebar = ({ channels, currentChannel, onChannelChange }) => {
           {!isFocusMode && (
               <div className="focus-banner">
                 <div className="focus-banner-content">
-                  <span className="focus-banner-text">Focus on</span>
                   <button 
-                    className="focus-dropdown-btn"
+                    className="focus-on-button"
                     onClick={() => setShowFocusSelector(true)}
                   >
-                    <span className="dropdown-chevron">▼</span>
+                    Focus on
                   </button>
                 </div>
               </div>

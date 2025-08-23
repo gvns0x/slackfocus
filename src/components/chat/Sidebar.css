@@ -72,11 +72,10 @@
 }
 
 .focus-banner {
-  padding: 8px;
+  padding: 16px 16px;
   width: 100%;
-  margin-bottom: 16px;
-  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
-  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+  margin-bottom: 8px;
+  background-color: transparent;
   position:sticky;
 }
 
@@ -93,9 +92,28 @@
 
 .focus-banner-text {
   composes: text-body;
-  font-weight: 600;
-  color: #ffffff;
+  color: rgba(0,0,0,0.8);
   flex: 1;
+}
+
+.focus-on-button {
+  background: #000;
+  color: #fff;
+  border: 1px solid;
+  border-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 100%) 1;
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 13px;
+  font-weight: 500;
+  flex: 1;
+  text-align: left;
+  width: 100%;
+}
+
+.focus-on-button:hover {
+  background: #333;
 }
 
 .focus-dropdown-btn {
@@ -170,13 +188,15 @@
   display: flex;
   align-items: center;
   padding: 8px 16px;
-  cursor: pointer;
+  /* Removed cursor: pointer to disable click interaction */
   transition: background-color 0.2s ease;
   position: relative;
   gap: 12px;
   margin: 0 8px;
   border-radius: 8px;
   color: rgba(0, 0, 0, 0.7);
+  /* Disabled interaction but kept hover effects */
+  user-select: none;
 }
 
 .channel-item:hover {
