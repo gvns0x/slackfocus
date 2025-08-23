@@ -15,4 +15,9 @@
   cursor: default;
 }
 
+.chat-app--modal-open {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
 

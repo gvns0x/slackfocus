@@ -37,6 +37,7 @@
 
 .workspace-name {
   composes: text-workspace-name;
+  font-weight: 600;
 }
 
 .focus-indicator-small {

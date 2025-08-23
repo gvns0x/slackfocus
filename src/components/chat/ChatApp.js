@@ -56,7 +56,7 @@ function ChatAppContent() {
   };
 
   return (
-    <div className="chat-app">
+    <div className={`chat-app ${isProjectModalOpen ? 'chat-app--modal-open' : ''}`}>
       <Sidebar 
         channels={channels} 
         currentChannel={currentChannel} 
@@ -75,10 +75,12 @@ function ChatAppContent() {
           onSendMessage={addMessage}
         />
       )}
-      <ProjectSearchModal 
-        isOpen={isProjectModalOpen}
-        onClose={() => setIsProjectModalOpen(false)}
-      />
+      {isProjectModalOpen && (
+        <ProjectSearchModal 
+          isOpen={isProjectModalOpen}
+          onClose={() => setIsProjectModalOpen(false)}
+        />
+      )}
     </div>
   );
 }
