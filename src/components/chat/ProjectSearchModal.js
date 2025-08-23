@@ -6,6 +6,7 @@ const ProjectSearchModal = ({ isOpen, onClose }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [projects, setProjects] = useState([]);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [isInitialBlur, setIsInitialBlur] = useState(false);
 
   // Handle ESC key press
   useEffect(() => {
@@ -31,8 +32,16 @@ const ProjectSearchModal = ({ isOpen, onClose }) => {
   useEffect(() => {
     if (isOpen) {
       setIsAnimating(true);
+      setIsInitialBlur(true);
+      // Remove initial blur after 2 seconds
+      const blurTimer = setTimeout(() => {
+        setIsInitialBlur(false);
+      }, 2000);
+      
+      return () => clearTimeout(blurTimer);
     } else {
       setIsAnimating(false);
+      setIsInitialBlur(false);
     }
   }, [isOpen]);
 
@@ -85,7 +94,7 @@ const ProjectSearchModal = ({ isOpen, onClose }) => {
 
   return (
     <div className={`project-search-modal-overlay ${isOpen ? 'modal-open' : 'modal-closing'}`} onClick={onClose}>
-      <div className={`project-search-modal ${isOpen ? 'modal-content-open' : 'modal-content-closing'}`} onClick={(e) => e.stopPropagation()}>
+      <div className={`project-search-modal ${isOpen ? 'modal-content-open' : 'modal-content-closing'} ${isInitialBlur ? 'initial-blur' : ''}`} onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h1>Focus on</h1>
           <button className="close-button" onClick={onClose}>×</button>
@@ -103,7 +112,9 @@ const ProjectSearchModal = ({ isOpen, onClose }) => {
           </div>
           
           <div className="projects-section">
-            <h2>Finding your projects</h2>
+            <h2 className={isLoading ? 'loading-text' : ''}>
+              {isLoading ? 'Finding your projects' : 'Select a project to focus on'}
+            </h2>
             
             <div className="scrollable-content">
               {isLoading ? (
