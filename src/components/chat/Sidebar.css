@@ -243,18 +243,7 @@
   background-color: rgba(0,0,0,0.035);
 }
 
-.user-avatar {
-  width: 28px;
-  height: 28px;
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  color: rgba(0,0,0,0.8);
-  font-weight: 600;
-}
+/* Avatar styles are now handled by the Avatar component */
 
 .user-name {
   flex: 1;

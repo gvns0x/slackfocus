@@ -1,5 +1,6 @@
 import React from 'react';
 import { useFocus } from '../../contexts/FocusContext';
+import Avatar from '../common/Avatar';
 import './FocusMode.css';
 
 const FocusMode = ({ onChannelChange, currentChannel }) => {
@@ -82,7 +83,7 @@ const FocusMode = ({ onChannelChange, currentChannel }) => {
           <div className="people-grid">
             {currentFocus.people.map((person, index) => (
               <div key={index} className="person-card">
-                <div className="person-avatar">{person.avatar}</div>
+                <Avatar userInitials={person.avatar} size="large" className="person-avatar" />
                 <div className="person-content">
                   <div className="person-name">{person.name}</div>
                   <div className="person-role">{person.role}</div>

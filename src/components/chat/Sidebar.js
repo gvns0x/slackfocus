@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useFocus } from '../../contexts/FocusContext';
 import FocusSelector from './FocusSelector';
+import Avatar from '../common/Avatar';
 import './Sidebar.css';
 
 const Sidebar = ({ channels, currentChannel, onChannelChange }) => {
@@ -12,7 +13,7 @@ const Sidebar = ({ channels, currentChannel, onChannelChange }) => {
       <div className="sidebar">
         <div className="sidebar-header">
           <div className="workspace-info">
-            <div className="workspace-avatar">SF</div>
+            <Avatar userInitials="SF" size="medium" className="workspace-avatar" />
             <div className="workspace-name">SlackFocus</div>
           </div>
           {isFocusMode && (
@@ -42,7 +43,6 @@ const Sidebar = ({ channels, currentChannel, onChannelChange }) => {
           <div className="sidebar-section">
             <div className="section-header">
               <span className="section-title">Channels</span>
-              <button className="add-button">+</button>
             </div>
             
             <div className="channel-list">
@@ -61,20 +61,19 @@ const Sidebar = ({ channels, currentChannel, onChannelChange }) => {
           <div className="sidebar-section">
             <div className="section-header">
               <span className="section-title">Direct Messages</span>
-              <button className="add-button">+</button>
             </div>
             
             <div className="dm-list">
               <div className="dm-item">
-                <div className="user-avatar">SC</div>
+                <Avatar userInitials="SC" size="small" className="user-avatar" />
                 <span className="user-name">Sarah Chen</span>
               </div>
               <div className="dm-item">
-                <div className="user-avatar">MJ</div>
+                <Avatar userInitials="MJ" size="small" className="user-avatar" />
                 <span className="user-name">Mike Johnson</span>
               </div>
               <div className="dm-item">
-                <div className="user-avatar">AR</div>
+                <Avatar userInitials="AR" size="small" className="user-avatar" />
                 <span className="user-name">Alex Rodriguez</span>
               </div>
             </div>
@@ -83,7 +82,7 @@ const Sidebar = ({ channels, currentChannel, onChannelChange }) => {
         
         <div className="sidebar-footer">
           <div className="user-profile">
-            <div className="user-avatar">YO</div>
+            <Avatar userInitials="YO" size="small" className="user-avatar" />
             <div className="user-info">
               <div className="user-name">You</div>
             </div>

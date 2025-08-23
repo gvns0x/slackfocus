@@ -13,4 +13,8 @@
   position: relative;
 }
 
+.chat-app:hover {
+  cursor: default;
+}
+
 

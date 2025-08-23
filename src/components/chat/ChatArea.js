@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import Avatar from '../common/Avatar';
 import './ChatArea.css';
 
 const ChatArea = ({ channel, messages, onSendMessage }) => {
@@ -46,7 +47,7 @@ const ChatArea = ({ channel, messages, onSendMessage }) => {
           {messages.map((message, index) => (
             <div key={message.id} className="message">
               <div className="message-avatar">
-                <div className="avatar">{message.avatar}</div>
+                <Avatar userInitials={message.avatar} size="medium" />
               </div>
               <div className="message-content">
                 <div className="message-header">
