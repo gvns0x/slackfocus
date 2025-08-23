@@ -100,9 +100,9 @@ export const FocusProvider = ({ children }) => {
           { id: 'email-campaigns', name: 'email-campaigns', unread: 0 }
         ],
         people: [
-          { initials: 'SC', name: 'Sarah Chen', role: 'Product Manager' },
-          { initials: 'MJ', name: 'Mike Johnson', role: 'Marketing Lead' },
-          { initials: 'EW', name: 'Emma Wilson', role: 'Social Media Manager' }
+          { initials: 'SC', name: 'Sarah Chen', role: 'Product Manager', help: 'Can provide updates on launch timeline and coordinate with stakeholders' },
+          { initials: 'MJ', name: 'Mike Johnson', role: 'Marketing Lead', help: 'Responsible for marketing strategy and promotional campaigns' },
+          { initials: 'EW', name: 'Emma Wilson', role: 'Social Media Manager', help: 'Manages social media presence and content distribution' }
         ]
       },
       2: { // Mobile App Redesign
@@ -113,9 +113,9 @@ export const FocusProvider = ({ children }) => {
           { id: 'app-testing', name: 'app-testing', unread: 0 }
         ],
         people: [
-          { initials: 'AR', name: 'Alex Rodriguez', role: 'UI/UX Designer' },
-          { initials: 'DK', name: 'David Kim', role: 'Mobile Developer' },
-          { initials: 'LP', name: 'Lisa Park', role: 'Product Designer' }
+          { initials: 'AR', name: 'Alex Rodriguez', role: 'UI/UX Designer', help: 'Can answer design questions and provide mockups' },
+          { initials: 'DK', name: 'David Kim', role: 'Mobile Developer', help: 'Handles technical implementation and app development' },
+          { initials: 'LP', name: 'Lisa Park', role: 'Product Designer', help: 'Focuses on user experience and product strategy' }
         ]
       },
       3: { // Database Migration
@@ -126,9 +126,9 @@ export const FocusProvider = ({ children }) => {
           { id: 'migration', name: 'migration', unread: 1 }
         ],
         people: [
-          { initials: 'CB', name: 'Chris Brown', role: 'Backend Engineer' },
-          { initials: 'TH', name: 'Tom Hanks', role: 'DevOps Engineer' },
-          { initials: 'JS', name: 'Jennifer Smith', role: 'Database Admin' }
+          { initials: 'CB', name: 'Chris Brown', role: 'Backend Engineer', help: 'Can answer technical questions about migration process' },
+          { initials: 'TH', name: 'Tom Hanks', role: 'DevOps Engineer', help: 'Manages infrastructure and deployment pipeline' },
+          { initials: 'JS', name: 'Jennifer Smith', role: 'Database Admin', help: 'Oversees data integrity and migration validation' }
         ]
       }
     };

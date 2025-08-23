@@ -1,6 +1,7 @@
 import React from 'react';
 import { useFocus } from '../../contexts/FocusContext';
 import Avatar from '../common/Avatar';
+import Tooltip from '../common/Tooltip';
 import './Sidebar.css';
 
 const Sidebar = ({ channels, currentChannel, onChannelChange, onFocusButtonClick, onFocusButtonHover, projectData }) => {
@@ -25,9 +26,9 @@ const Sidebar = ({ channels, currentChannel, onChannelChange, onFocusButtonClick
 
   // Default people for when no project is selected
   const defaultPeople = [
-    { initials: 'SC', name: 'Sarah Chen' },
-    { initials: 'MJ', name: 'Mike Johnson' },
-    { initials: 'AR', name: 'Alex Rodriguez' }
+    { initials: 'SC', name: 'Sarah Chen', role: 'Product Manager', help: 'Can help with project coordination and stakeholder management' },
+    { initials: 'MJ', name: 'Mike Johnson', role: 'Marketing Lead', help: 'Responsible for marketing strategy and campaign planning' },
+    { initials: 'AR', name: 'Alex Rodriguez', role: 'Engineering Lead', help: 'Can answer technical questions about product features and implementation' }
   ];
 
   // Use project-specific people or default people
@@ -111,10 +112,29 @@ const Sidebar = ({ channels, currentChannel, onChannelChange, onFocusButtonClick
             ) : (
               <>
                 {people.map((person, index) => (
-                  <div key={index} className="dm-item">
-                    <Avatar userInitials={person.initials} size="small" className="user-avatar" />
-                    <span className="user-name">{person.name}</span>
-                  </div>
+                  selectedProject ? (
+                    <Tooltip
+                      key={index}
+                      content={
+                        <div className="tooltip-content">
+                          <div className="tooltip-name">{person.name}</div>
+                          <div className="tooltip-role">{person.role}</div>
+                          <div className="tooltip-help">{person.help}</div>
+                        </div>
+                      }
+                      position="right"
+                    >
+                      <div className="dm-item">
+                        <Avatar userInitials={person.initials} size="small" className="user-avatar" />
+                        <span className="user-name">{person.name}</span>
+                      </div>
+                    </Tooltip>
+                  ) : (
+                    <div key={index} className="dm-item">
+                      <Avatar userInitials={person.initials} size="small" className="user-avatar" />
+                      <span className="user-name">{person.name}</span>
+                    </div>
+                  )
                 ))}
               </>
             )}
