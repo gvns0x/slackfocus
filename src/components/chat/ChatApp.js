@@ -36,10 +36,10 @@ function ChatAppContent() {
   // Get project-specific data
   const projectData = selectedProject ? getProjectData(selectedProject.id) : null;
   const channels = projectData ? projectData.channels : [
-    { id: 'general', name: 'general', unread: 0 },
-    { id: 'random', name: 'random', unread: 2 },
-    { id: 'announcements', name: 'announcements', unread: 0 },
-    { id: 'project-alpha', name: 'project-alpha', unread: 1 }
+    { id: 'general', name: 'general', unread: 0, threads: [] },
+    { id: 'random', name: 'random', unread: 2, threads: [] },
+    { id: 'announcements', name: 'announcements', unread: 0, threads: [] },
+    { id: 'project-alpha', name: 'project-alpha', unread: 1, threads: [] }
   ];
 
   const addMessage = (text) => {

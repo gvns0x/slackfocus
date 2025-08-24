@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFocus } from '../../contexts/FocusContext';
 import Avatar from '../common/Avatar';
 import Tooltip from '../common/Tooltip';
@@ -6,6 +6,7 @@ import './Sidebar.css';
 
 const Sidebar = ({ channels, currentChannel, onChannelChange, onFocusButtonClick, onFocusButtonHover, projectData }) => {
   const { selectedProject, isLoading, exitFocusMode } = useFocus();
+  const [expandedChannels, setExpandedChannels] = useState(new Set());
 
   const handleFocusButtonMouseEnter = () => {
     if (onFocusButtonHover) {
@@ -22,6 +23,19 @@ const Sidebar = ({ channels, currentChannel, onChannelChange, onFocusButtonClick
   const handleExitFocus = (e) => {
     e.stopPropagation();
     exitFocusMode();
+  };
+
+  const handleDropdownToggle = (channelId, e) => {
+    e.stopPropagation();
+    setExpandedChannels(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(channelId)) {
+        newSet.delete(channelId);
+      } else {
+        newSet.add(channelId);
+      }
+      return newSet;
+    });
   };
 
   // Default people for when no project is selected
@@ -83,12 +97,35 @@ const Sidebar = ({ channels, currentChannel, onChannelChange, onFocusButtonClick
               ))
             ) : (
               channels.map(channel => (
-                <div 
-                  key={channel.id}
-                  className={`channel-item ${currentChannel === channel.id ? 'active' : ''}`}
-                  onClick={() => onChannelChange(channel.id)}
-                >
-                  <span className="channel-name">{channel.name}</span>
+                <div key={channel.id}>
+                  <div 
+                    className={`channel-item ${currentChannel === channel.id ? 'active' : ''}`}
+                    onClick={() => onChannelChange(channel.id)}
+                  >
+                    <span className="channel-name">{channel.name}</span>
+                    {selectedProject && channel.threads && channel.threads.length > 0 && (
+                      <button 
+                        className={`channel-dropdown-btn ${expandedChannels.has(channel.id) ? 'expanded' : ''}`}
+                        onClick={(e) => handleDropdownToggle(channel.id, e)}
+                        title="Show threads"
+                      >
+                        <span className="dropdown-chevron">▼</span>
+                      </button>
+                    )}
+                  </div>
+                  {selectedProject && channel.threads && expandedChannels.has(channel.id) && (
+                    <div className="thread-list">
+                      {channel.threads.map(thread => (
+                        <div 
+                          key={thread.id}
+                          className="thread-item"
+                        >
+                          <span className="thread-icon">🧵</span>
+                          <span className="thread-name">{thread.name}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ))
             )}

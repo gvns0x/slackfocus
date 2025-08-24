@@ -1,6 +1,8 @@
 .tooltip-trigger {
   display: inline-block;
   position: relative;
+  width: 100%;
+  z-index: 2;
 }
 
 .tooltip {
@@ -15,6 +17,8 @@
   pointer-events: none;
   animation: tooltipFadeIn 0.2s ease-out;
   white-space: nowrap;
+  position: absolute;
+  z-index: 9999;
 }
 
 .tooltip-right {
@@ -22,21 +26,16 @@
   top: 50%;
   transform: translateY(-50%);
   margin-left: 12px;
-  position: absolute;
 }
-
-
-
-
 
 @keyframes tooltipFadeIn {
   from {
     opacity: 0;
-    transform: translateY(-4px);
+    transform: translateY(-50%) translateX(-8px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(-50%) translateX(0);
   }
 }
 

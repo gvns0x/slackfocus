@@ -6,12 +6,10 @@ const Tooltip = ({ children, content, position = 'top' }) => {
   const triggerRef = useRef(null);
 
   const handleMouseEnter = () => {
-    console.log('Mouse enter - showing tooltip');
     setIsVisible(true);
   };
 
   const handleMouseLeave = () => {
-    console.log('Mouse leave - hiding tooltip');
     setIsVisible(false);
   };
 
@@ -21,7 +19,6 @@ const Tooltip = ({ children, content, position = 'top' }) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className="tooltip-trigger"
-      style={{ position: 'relative' }}
     >
       {children}
       {isVisible && (

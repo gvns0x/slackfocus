@@ -8,6 +8,8 @@
   position: relative;
   overflow: visible;
   border-radius: 24px 0 0 24px;
+  z-index: 1;
+  isolation: isolate;
 }
 
 .sidebar-header {
@@ -286,6 +288,84 @@
   color: rgba(0,0,0,1);
 }
 
+/* Channel dropdown button */
+.channel-dropdown-btn {
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-left: auto;
+  opacity: 0;
+  color: rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 2;
+}
+
+.channel-item:hover .channel-dropdown-btn {
+  opacity: 1;
+}
+
+.channel-dropdown-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.channel-dropdown-btn.expanded .dropdown-chevron {
+  transform: rotate(180deg);
+}
+
+.dropdown-chevron {
+  font-size: 10px;
+  transition: transform 0.2s ease;
+}
+
+/* Thread list styles */
+.thread-list {
+  margin-left: 16px;
+  margin-top: 2px;
+  margin-bottom: 4px;
+  border-left: 2px solid rgba(0, 0, 0, 0.1);
+  margin-left: 24px;
+}
+
+.thread-item {
+  display: flex;
+  align-items: center;
+  padding: 6px 16px;
+  transition: background-color 0.2s ease;
+  border-radius: 6px;
+  margin: 0 8px 2px 8px;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 13px;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  gap: 8px;
+}
+
+.thread-icon {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.thread-item:hover {
+  background: rgba(0,0,0,0.035);
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.thread-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .unread-badge {
   background-color: rgba(0,0,0,0.1);
   color: #ffffff;
@@ -310,6 +390,8 @@
   margin: 0 8px;
   border-radius: 8px;
   color: rgba(0, 0, 0, 0.7);
+  position: relative;
+  z-index: 1;
 }
 
 .dm-item:hover {

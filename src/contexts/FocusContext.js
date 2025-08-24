@@ -94,10 +94,44 @@ export const FocusProvider = ({ children }) => {
     const projectData = {
       1: { // Product Launch Campaign
         channels: [
-          { id: 'marketing', name: 'marketing', unread: 0 },
-          { id: 'product-launch', name: 'product-launch', unread: 2 },
-          { id: 'social-media', name: 'social-media', unread: 1 },
-          { id: 'email-campaigns', name: 'email-campaigns', unread: 0 }
+          { 
+            id: 'marketing', 
+            name: 'marketing', 
+            unread: 0,
+            threads: [
+              { id: 'thread-1', name: 'Campaign Strategy Discussion' },
+              { id: 'thread-2', name: 'Budget Planning' },
+              { id: 'thread-3', name: 'Target Audience Analysis' }
+            ]
+          },
+          { 
+            id: 'product-launch', 
+            name: 'product-launch', 
+            unread: 2,
+            threads: [
+              { id: 'thread-4', name: 'Launch Timeline Review' },
+              { id: 'thread-5', name: 'Feature Prioritization' },
+              { id: 'thread-6', name: 'Go-to-Market Strategy' }
+            ]
+          },
+          { 
+            id: 'social-media', 
+            name: 'social-media', 
+            unread: 1,
+            threads: [
+              { id: 'thread-7', name: 'Content Calendar Planning' },
+              { id: 'thread-8', name: 'Influencer Outreach' }
+            ]
+          },
+          { 
+            id: 'email-campaigns', 
+            name: 'email-campaigns', 
+            unread: 0,
+            threads: [
+              { id: 'thread-9', name: 'Email Sequence Design' },
+              { id: 'thread-10', name: 'A/B Testing Results' }
+            ]
+          }
         ],
         people: [
           { initials: 'SC', name: 'Sarah Chen', role: 'Product Manager', help: 'Can provide updates on launch timeline and coordinate with stakeholders' },
@@ -107,10 +141,43 @@ export const FocusProvider = ({ children }) => {
       },
       2: { // Mobile App Redesign
         channels: [
-          { id: 'design', name: 'design', unread: 0 },
-          { id: 'mobile-dev', name: 'mobile-dev', unread: 3 },
-          { id: 'ui-ux', name: 'ui-ux', unread: 1 },
-          { id: 'app-testing', name: 'app-testing', unread: 0 }
+          { 
+            id: 'design', 
+            name: 'design', 
+            unread: 0,
+            threads: [
+              { id: 'thread-11', name: 'Design System Updates' },
+              { id: 'thread-12', name: 'User Research Findings' }
+            ]
+          },
+          { 
+            id: 'mobile-dev', 
+            name: 'mobile-dev', 
+            unread: 3,
+            threads: [
+              { id: 'thread-13', name: 'iOS Implementation' },
+              { id: 'thread-14', name: 'Android Development' },
+              { id: 'thread-15', name: 'Performance Optimization' }
+            ]
+          },
+          { 
+            id: 'ui-ux', 
+            name: 'ui-ux', 
+            unread: 1,
+            threads: [
+              { id: 'thread-16', name: 'User Flow Design' },
+              { id: 'thread-17', name: 'Prototype Testing' }
+            ]
+          },
+          { 
+            id: 'app-testing', 
+            name: 'app-testing', 
+            unread: 0,
+            threads: [
+              { id: 'thread-18', name: 'QA Testing Progress' },
+              { id: 'thread-19', name: 'Beta Testing Feedback' }
+            ]
+          }
         ],
         people: [
           { initials: 'AR', name: 'Alex Rodriguez', role: 'UI/UX Designer', help: 'Can answer design questions and provide mockups' },
@@ -120,10 +187,43 @@ export const FocusProvider = ({ children }) => {
       },
       3: { // Database Migration
         channels: [
-          { id: 'backend', name: 'backend', unread: 0 },
-          { id: 'database', name: 'database', unread: 5 },
-          { id: 'devops', name: 'devops', unread: 2 },
-          { id: 'migration', name: 'migration', unread: 1 }
+          { 
+            id: 'backend', 
+            name: 'backend', 
+            unread: 0,
+            threads: [
+              { id: 'thread-20', name: 'API Migration Planning' },
+              { id: 'thread-21', name: 'Data Validation' }
+            ]
+          },
+          { 
+            id: 'database', 
+            name: 'database', 
+            unread: 5,
+            threads: [
+              { id: 'thread-22', name: 'Schema Migration' },
+              { id: 'thread-23', name: 'Performance Monitoring' },
+              { id: 'thread-24', name: 'Backup Strategy' }
+            ]
+          },
+          { 
+            id: 'devops', 
+            name: 'devops', 
+            unread: 2,
+            threads: [
+              { id: 'thread-25', name: 'Deployment Pipeline' },
+              { id: 'thread-26', name: 'Infrastructure Setup' }
+            ]
+          },
+          { 
+            id: 'migration', 
+            name: 'migration', 
+            unread: 1,
+            threads: [
+              { id: 'thread-27', name: 'Rollback Plan' },
+              { id: 'thread-28', name: 'Testing Strategy' }
+            ]
+          }
         ],
         people: [
           { initials: 'CB', name: 'Chris Brown', role: 'Backend Engineer', help: 'Can answer technical questions about migration process' },
