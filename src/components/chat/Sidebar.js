@@ -120,7 +120,6 @@ const Sidebar = ({ channels, currentChannel, onChannelChange, onFocusButtonClick
                           key={thread.id}
                           className="thread-item"
                         >
-                          <span className="thread-icon">🧵</span>
                           <span className="thread-name">{thread.name}</span>
                         </div>
                       ))}
