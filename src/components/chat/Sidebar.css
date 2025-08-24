@@ -1,12 +1,14 @@
 .sidebar {
-  flex: 1;
+  width: 200px;
+  min-width: 200px;
+  max-width: 200px;
   background-color: rgba(255, 255, 255, 0.923);
   backdrop-filter: blur(40px);
   color: #333333;
   display: flex;
   flex-direction: column;
   position: relative;
-  overflow: visible;
+  overflow: hidden;
   border-radius: 24px 0 0 24px;
   z-index: 1;
   isolation: isolate;
@@ -41,6 +43,9 @@
   composes: text-workspace-name;
   font-weight: 600;
   font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .focus-indicator-small {
@@ -69,6 +74,13 @@
   flex: 1;
   overflow-y: auto;
   background-color: transparent;
+  /* Hide scrollbar */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.sidebar-content::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 .focus-section {
@@ -139,6 +151,7 @@
   text-align: left;
   color: rgba(255,255,255,0.9);
   font-weight: 500;
+  min-width: 0;
 }
 
 .exit-focus-button {
@@ -277,6 +290,9 @@
   flex: 1;
   composes: text-channel-name;
   transition: color 0.2s ease;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .channel-item:hover .channel-name,
@@ -405,6 +421,9 @@
   flex: 1;
   composes: text-user-name;
   margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .dm-item:hover .user-name {
