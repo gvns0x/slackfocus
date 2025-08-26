@@ -264,7 +264,7 @@
 
 .channel-item:hover {
   background: rgba(0,0,0,0.035);
-  cursor: no-drop;
+  cursor: pointer;
 }
 
 .channel-item.active {
