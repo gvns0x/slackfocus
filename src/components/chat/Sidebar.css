@@ -9,7 +9,7 @@
   flex-direction: column;
   position: relative;
   overflow: hidden;
-  border-radius: 24px 0 0 24px;
+  border-radius: 20px;
   z-index: 1;
   isolation: isolate;
 }
