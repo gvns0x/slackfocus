@@ -1,5 +1,6 @@
 .chat-app {
   display: flex;
+  flex-direction: column;
   max-width: 600px;
   max-height: 600px;
   width: 100%;
@@ -10,7 +11,14 @@
   margin: 20px auto;
   position: relative;
   padding: 4px;
-  background-color: red;
+  background-color: rgba(0,0,0,0.05);
+  gap: 4px;
+}
+
+.chat-app-main {
+  display: flex;
+  flex: 1;
+  min-height: 0;
   gap: 4px;
 }
 
@@ -21,6 +29,78 @@
 .chat-app--modal-open {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+}
+
+/* Global Input Field Styles */
+.global-input-container {
+  background-color: #ffffff;
+  border-top: 1px solid #e1e5e9;
+  border-radius: 24px;
+  min-height: 56px;
+}
+
+.global-input-form {
+  width: 100%;
+  height: 56px;
+}
+
+.global-input-wrapper {
+  display: flex;
+  align-items: center;
+  background-color: #f8f9fa;
+  border: 1px solid #e1e5e9;
+  border-radius: 20px;
+  padding: 8px 12px;
+  transition: border-color 0.2s ease;
+  height: 100%;
+}
+
+.global-input-wrapper:focus-within {
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.global-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  color: #333;
+  outline: none;
+  padding: 0;
+  margin: 0;
+}
+
+.global-input::placeholder {
+  color: #6c757d;
+}
+
+.global-input-actions {
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+}
+
+.global-input-button {
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 12px;
+}
+
+.global-input-button:hover {
+  background: green;
+}
+
+.global-input-button:active {
+  transform: scale(0.95);
 }
 
 

@@ -9,6 +9,7 @@ import './ChatApp.css';
 function ChatAppContent() {
   const [currentChannel, setCurrentChannel] = useState('general');
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
+  const [globalInputValue, setGlobalInputValue] = useState('');
   const { isFocusMode, selectedProject, getProjectData } = useFocus();
   const [messages, setMessages] = useState({
     general: [
@@ -57,33 +58,73 @@ function ChatAppContent() {
     }));
   };
 
+  const handleGlobalInputSubmit = (e) => {
+    e.preventDefault();
+    if (globalInputValue.trim()) {
+      // Handle global input submission here
+      console.log('Global input submitted:', globalInputValue);
+      setGlobalInputValue('');
+    }
+  };
+
+  const handleGlobalInputChange = (e) => {
+    setGlobalInputValue(e.target.value);
+  };
+
   return (
     <div className={`chat-app ${isProjectModalOpen ? 'chat-app--modal-open' : ''}`}>
-      <Sidebar 
-        channels={channels} 
-        currentChannel={currentChannel} 
-        onChannelChange={setCurrentChannel}
-        onFocusButtonClick={() => setIsProjectModalOpen(true)}
-        projectData={projectData}
-      />
-      {selectedProject ? (
-        <ChatArea 
-          channel={currentChannel}
-          messages={messages[currentChannel] || []}
-          onSendMessage={addMessage}
-        />
-      ) : isFocusMode ? (
-        <FocusMode 
+      <div className="chat-app-main">
+        <Sidebar 
+          channels={channels} 
+          currentChannel={currentChannel} 
           onChannelChange={setCurrentChannel}
-          currentChannel={currentChannel}
+          onFocusButtonClick={() => setIsProjectModalOpen(true)}
+          projectData={projectData}
         />
-      ) : (
-        <ChatArea 
-          channel={currentChannel}
-          messages={messages[currentChannel] || []}
-          onSendMessage={addMessage}
-        />
-      )}
+        {selectedProject ? (
+          <ChatArea 
+            channel={currentChannel}
+            messages={messages[currentChannel] || []}
+            onSendMessage={addMessage}
+          />
+        ) : isFocusMode ? (
+          <FocusMode 
+            onChannelChange={setCurrentChannel}
+            currentChannel={currentChannel}
+          />
+        ) : (
+          <ChatArea 
+            channel={currentChannel}
+            messages={messages[currentChannel] || []}
+            onSendMessage={addMessage}
+          />
+        )}
+      </div>
+      
+      {/* Global Input Field */}
+      <div className="global-input-container">
+        <form onSubmit={handleGlobalInputSubmit} className="global-input-form">
+          <div className="global-input-wrapper">
+            <input
+              type="text"
+              value={globalInputValue}
+              onChange={handleGlobalInputChange}
+              placeholder="Type a message or command..."
+              className="global-input"
+            />
+            <div className="global-input-actions">
+              {globalInputValue.trim() ? (
+                <button type="submit" className="global-input-button">
+                  <span className="icon">➤</span>
+                </button>
+              ) : (
+                <span></span>
+              )}
+            </div>
+          </div>
+        </form>
+      </div>
+
       {isProjectModalOpen && (
         <ProjectSearchModal 
           isOpen={isProjectModalOpen}
