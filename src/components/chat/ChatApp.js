@@ -127,22 +127,15 @@ function ChatAppContent() {
                 </div>
                 <div className="nav-tabs">
                   <div className="nav-tab active">Mobile redesign files</div>
-                  <div className="nav-tab">CHANNELS ▼</div>
-                  <div className="nav-tab">PEOPLE ▼</div>
+                  <div className="nav-tab dropd">CHANNELS ▼</div>
+                  <div className="nav-tab dropd">PEOPLE ▼</div>
                 </div>
               </div>
             </div>
             
             {/* Main Content Area */}
             <div className="mobile-main-content">
-              <div className="content-header">
-                <h1 className="content-title">Mobile redesign files</h1>
-                <div className="content-actions">
-                  <button className="content-action-btn">
-                    <span className="icon">⋯</span>
-                  </button>
-                </div>
-              </div>
+            
               
               <div className="file-display-area">
                 {/* Large main file placeholder */}
@@ -157,10 +150,6 @@ function ChatAppContent() {
                   <div className="file-thumbnail"></div>
                 </div>
               </div>
-            </div>
-            
-            <div className="mobile-status">
-              <p className="status-text">Checking files from mobile redesign project</p>
             </div>
           </div>
         </div>
