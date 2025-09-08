@@ -58,7 +58,7 @@ const Sidebar = ({ channels, currentChannel, onChannelChange, onFocusButtonClick
       </div>
       
       <div className="sidebar-content">
-        <div className="focus-banner">
+        {/* <div className="focus-banner">
           <div className="focus-banner-content">
             <button 
               className={`focus-on-button ${selectedProject ? 'focus-active' : ''}`}
@@ -80,7 +80,7 @@ const Sidebar = ({ channels, currentChannel, onChannelChange, onFocusButtonClick
               )}
             </button>
           </div>
-        </div>
+        </div>  */}
         
         <div className="sidebar-section">
           <div className="section-header">
@@ -178,14 +178,14 @@ const Sidebar = ({ channels, currentChannel, onChannelChange, onFocusButtonClick
         </div>
       </div>
       
-      <div className="sidebar-footer">
+      {/* <div className="sidebar-footer">
         <div className="user-profile">
           <Avatar userInitials="YO" size="small" className="user-avatar" />
           <div className="user-info">
             <div className="user-name">You</div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

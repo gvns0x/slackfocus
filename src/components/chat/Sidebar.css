@@ -12,11 +12,11 @@
   border-radius: 20px;
   z-index: 1;
   isolation: isolate;
+  gap: 32px;
 }
 
 .sidebar-header {
   padding: 16px;
-  border-bottom: .5px solid rgba(0,0,0,0.1);
   background: #ffffff;
 }
 
@@ -71,12 +71,16 @@
 }
 
 .sidebar-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   flex: 1;
   overflow-y: auto;
   background-color: transparent;
   /* Hide scrollbar */
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* Internet Explorer 10+ */
+  gap: 32px;
 }
 
 .sidebar-content::-webkit-scrollbar {
@@ -208,10 +212,6 @@
   transform: translateY(1px);
 }
 
-.sidebar-section {
-  margin-bottom: 24px;
-}
-
 .section-header {
   display: flex;
   justify-content: space-between;
@@ -265,23 +265,12 @@
 .channel-item:hover {
   background: rgba(0,0,0,0.035);
   cursor: pointer;
+  color: red;
 }
 
 .channel-item.active {
   background: rgba(0, 0, 0, 0.06);
   color: red;
-}
-
-.channel-hash {
-  color: #6c757d;
-  font-size: 18px;
-  font-weight: 600;
-  transition: color 0.2s ease;
-}
-
-.channel-item:hover .channel-hash,
-.channel-item.active .channel-hash {
-  color: #007bff;
 }
 
 .channel-name {
@@ -291,16 +280,19 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: red;
+}
+
+.channel-item .channel-name {
+  color: rgba(0,0,0,0.6);
 }
 
 .channel-item:hover .channel-name,
 .channel-item.active .channel-name {
-  color: #333333;
+  color: rgba(0,0,0,1) !important;
 }
 
-.channel-item.active .channel-name {
-  color: rgba(0,0,0,1);
-}
+
 
 /* Channel dropdown button */
 .channel-dropdown-btn {
@@ -410,7 +402,6 @@
 
 .dm-item:hover {
   background-color: rgba(0,0,0,0.035);
-  cursor: no-drop;
 }
 
 /* Avatar styles are now handled by the Avatar component */
@@ -422,6 +413,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: rgba(0,0,0,.6);
 }
 
 .dm-item:hover .user-name {

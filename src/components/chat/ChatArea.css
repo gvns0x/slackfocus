@@ -104,7 +104,7 @@
   padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
 }
 
 .message {
@@ -142,11 +142,13 @@
   align-items: center;
   gap: 12px;
   margin-bottom: 8px;
+  justify-content: space-between;
 }
 
 .message-author {
   composes: text-title;
   color: #333333;
+  font-weight: 500;
 }
 
 .message-timestamp {
@@ -157,7 +159,7 @@
 
 .message-text {
   composes: text-body;
-  color: #495057;
+  color: rgba(0,0,0,.7);
   word-wrap: break-word;
 }
 
