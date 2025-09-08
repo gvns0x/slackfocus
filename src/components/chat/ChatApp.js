@@ -3,6 +3,7 @@ import Sidebar from './Sidebar';
 import ChatArea from './ChatArea';
 import FocusMode from './FocusMode';
 import ProjectSearchModal from './ProjectSearchModal';
+import Avatar from '../common/Avatar';
 import { FocusProvider, useFocus } from '../../contexts/FocusContext';
 import './ChatApp.css';
 
@@ -10,6 +11,7 @@ function ChatAppContent() {
   const [currentChannel, setCurrentChannel] = useState('general');
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
   const [globalInputValue, setGlobalInputValue] = useState('');
+  const [uiVersion, setUiVersion] = useState('default'); // 'default' or 'mobile-redesign'
   const { isFocusMode, selectedProject, getProjectData } = useFocus();
   const [messages, setMessages] = useState({
     general: [
@@ -61,7 +63,13 @@ function ChatAppContent() {
   const handleGlobalInputSubmit = (e) => {
     e.preventDefault();
     if (globalInputValue.trim()) {
-      // Handle global input submission here
+      // Check if the input contains "mobile redesign" to switch UI versions
+      if (globalInputValue.toLowerCase().includes('mobile redesign')) {
+        setUiVersion('mobile-redesign');
+      } else if (globalInputValue.toLowerCase().includes('default') || globalInputValue.toLowerCase().includes('back to normal')) {
+        setUiVersion('default');
+      }
+      
       console.log('Global input submitted:', globalInputValue);
       setGlobalInputValue('');
     }
@@ -73,47 +81,113 @@ function ChatAppContent() {
 
   return (
     <div className={`chat-app ${isProjectModalOpen ? 'chat-app--modal-open' : ''}`}>
-      <div className="chat-app-main">
-        <Sidebar 
-          channels={channels} 
-          currentChannel={currentChannel} 
-          onChannelChange={setCurrentChannel}
-          onFocusButtonClick={() => setIsProjectModalOpen(true)}
-          projectData={projectData}
-        />
-        {selectedProject ? (
-          <ChatArea 
-            channel={currentChannel}
-            messages={messages[currentChannel] || []}
-            onSendMessage={addMessage}
-          />
-        ) : isFocusMode ? (
-          <FocusMode 
-            onChannelChange={setCurrentChannel}
-            currentChannel={currentChannel}
-          />
-        ) : (
-          <ChatArea 
-            channel={currentChannel}
-            messages={messages[currentChannel] || []}
-            onSendMessage={addMessage}
-          />
-        )}
-      </div>
+      {/* DEFAULT UI VERSION */}
+      {uiVersion === 'default' && (
+        <div className="ui-version-default">
+          <div className="chat-app-main">
+            <Sidebar 
+              channels={channels} 
+              currentChannel={currentChannel} 
+              onChannelChange={setCurrentChannel}
+              onFocusButtonClick={() => setIsProjectModalOpen(true)}
+              projectData={projectData}
+            />
+            {selectedProject ? (
+              <ChatArea 
+                channel={currentChannel}
+                messages={messages[currentChannel] || []}
+                onSendMessage={addMessage}
+              />
+            ) : isFocusMode ? (
+              <FocusMode 
+                onChannelChange={setCurrentChannel}
+                currentChannel={currentChannel}
+              />
+            ) : (
+              <ChatArea 
+                channel={currentChannel}
+                messages={messages[currentChannel] || []}
+                onSendMessage={addMessage}
+              />
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* MOBILE REDESIGN FOCUSED UI VERSION */}
+      {uiVersion === 'mobile-redesign' && (
+        <div className="ui-version-mobile-redesign">
+          <div className="mobile-redesign-layout">
+            {/* Top Navigation Bar */}
+            <div className="mobile-nav-bar">
+              <div className="nav-left">
+                <div className="workspace-info">
+                  <Avatar userInitials="SF" size="medium" className="workspace-avatar" />
+                  <div className="workspace-name">Acme</div>
+                </div>
+                <div className="nav-tabs">
+                  <div className="nav-tab active">Mobile redesign files</div>
+                  <div className="nav-tab">CHANNELS ▼</div>
+                  <div className="nav-tab">PEOPLE ▼</div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Main Content Area */}
+            <div className="mobile-main-content">
+              <div className="content-header">
+                <h1 className="content-title">Mobile redesign files</h1>
+                <div className="content-actions">
+                  <button className="content-action-btn">
+                    <span className="icon">⋯</span>
+                  </button>
+                </div>
+              </div>
+              
+              <div className="file-display-area">
+                {/* Large main file placeholder */}
+                <div className="main-file-placeholder"></div>
+                
+                {/* File thumbnails below */}
+                <div className="file-thumbnails-row">
+                  <div className="file-thumbnail"></div>
+                  <div className="file-thumbnail"></div>
+                  <div className="file-thumbnail"></div>
+                  <div className="file-thumbnail"></div>
+                  <div className="file-thumbnail"></div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mobile-status">
+              <p className="status-text">Checking files from mobile redesign project</p>
+            </div>
+          </div>
+        </div>
+      )}
       
-      {/* Global Input Field */}
-      <div className="global-input-container">
+      {/* Global Input Field - Always visible */}
+      <div className={`global-input-container ${uiVersion === 'mobile-redesign' ? 'mobile-redesign-input' : ''}`}>
         <form onSubmit={handleGlobalInputSubmit} className="global-input-form">
-          <div className="global-input-wrapper">
+          <div className={`global-input-wrapper ${uiVersion === 'mobile-redesign' ? 'mobile-redesign-wrapper' : ''}`}>
             <input
               type="text"
               value={globalInputValue}
               onChange={handleGlobalInputChange}
-              placeholder="Type a message or command..."
-              className="global-input"
+              placeholder={uiVersion === 'mobile-redesign' ? "Type to search files..." : "Type a message or command..."}
+              className={`global-input ${uiVersion === 'mobile-redesign' ? 'mobile-redesign-input-field' : ''}`}
             />
             <div className="global-input-actions">
-              {globalInputValue.trim() ? (
+              {uiVersion === 'mobile-redesign' ? (
+                <button 
+                  type="button" 
+                  className="exit-mobile-redesign-btn"
+                  onClick={() => setUiVersion('default')}
+                  title="Exit mobile redesign mode"
+                >
+                  <span className="icon">×</span>
+                </button>
+              ) : globalInputValue.trim() ? (
                 <button type="submit" className="global-input-button">
                   <span className="icon">➤</span>
                 </button>
