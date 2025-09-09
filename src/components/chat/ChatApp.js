@@ -101,7 +101,7 @@ function ChatAppContent() {
     // Show LoadingBlobs after 1 second (when CSS transition completes)
     const showBlobsTimer = setTimeout(() => {
       setLoadingBlobsVisible(true);
-    }, 200);
+    }, 100);
 
     // After 7 more seconds, show mobile redesign
     const showMobileTimer = setTimeout(() => {
