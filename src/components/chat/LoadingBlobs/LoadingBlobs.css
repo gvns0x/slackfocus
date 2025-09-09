@@ -1,0 +1,21 @@
+.blob {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #ff6ec7, #5b5bff);
+    filter: blur(60px);
+    opacity: 0.8;
+  }
+
+  .blob:nth-child(2) {
+    background: radial-gradient(circle at 30% 30%, #00f0ff, #0080ff);
+    width: 250px;
+    height: 250px;
+  }
+
+  .blob:nth-child(3) {
+    background: radial-gradient(circle at 30% 30%, #ffcf00, #ff5900);
+    width: 200px;
+    height: 200px;
+  }

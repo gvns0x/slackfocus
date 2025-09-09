@@ -110,6 +110,10 @@
   flex-direction: column;
 }
 
+.minimize {
+  height: 5px;
+}
+
 .ui-version-mobile-redesign {
   flex: 1;
   min-height: 0;
@@ -248,7 +252,7 @@
   flex: 1;
   background: #f8f9fa;
   border: 1px solid #e1e5e9;
-  border-radius: 12px;
+  border-radius: 19px;
   min-height: 300px;
   position: relative;
   overflow: hidden;
