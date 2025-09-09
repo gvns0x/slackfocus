@@ -16,6 +16,8 @@ function ChatAppContent() {
   const [uiVersion, setUiVersion] = useState('default'); // 'default' or 'mobile-redesign'
   const [isMinimized, setIsMinimized] = useState(false);
   const [showLoadingBlobs, setShowLoadingBlobs] = useState(false);
+  const [loadingBlobsVisible, setLoadingBlobsVisible] = useState(false);
+  const [isFadingOut, setIsFadingOut] = useState(false);
   const chatAppMainRef = useRef(null);
 
   const { isFocusMode, selectedProject, getProjectData } = useFocus();
@@ -93,37 +95,41 @@ function ChatAppContent() {
     const main = chatAppMainRef.current;
     if (!main) return;
 
-    const tl = gsap.timeline();
+    // Start the CSS fade-out
+    setIsFadingOut(true);
 
-    // Fade out the default content
-    tl.to(main, { 
-      opacity: 0, 
-      duration: 0.5, 
-      ease: "power2.out" 
-    });
+    // Show LoadingBlobs after 1 second (when CSS transition completes)
+    const showBlobsTimer = setTimeout(() => {
+      setLoadingBlobsVisible(true);
+    }, 200);
 
-    // After 7 seconds, show mobile redesign with smooth animation
-    tl.to({}, { duration: 7 }); // Wait 7 seconds
-
-    tl.add(() => {
+    // After 7 more seconds, show mobile redesign
+    const showMobileTimer = setTimeout(() => {
       setUiVersion('mobile-redesign');
       setShowLoadingBlobs(false);
+      setLoadingBlobsVisible(false);
+      setIsFadingOut(false);
       setIsMinimized(false);
-    });
+    }, 8000); // 1 second fade + 7 seconds wait
 
-    // Animate mobile redesign in
-    tl.fromTo(main, 
-      { opacity: 0, scale: 0.8, y: 20 },
-      { opacity: 1, scale: 1, y: 0, duration: 0.8, ease: "power2.out" }
-    );
+    return () => {
+      clearTimeout(showBlobsTimer);
+      clearTimeout(showMobileTimer);
+    };
+  }, [showLoadingBlobs]);
 
-    return () => tl.kill();
+  // Reset states when showLoadingBlobs changes
+  useEffect(() => {
+    if (!showLoadingBlobs) {
+      setLoadingBlobsVisible(false);
+      setIsFadingOut(false);
+    }
   }, [showLoadingBlobs]);
 
   return (
     <div className={`chat-app ${isProjectModalOpen ? 'chat-app--modal-open' : ''}`}>
       {/* Loading Blobs Overlay */}
-      {showLoadingBlobs && (
+      {showLoadingBlobs && loadingBlobsVisible && (
         <div className="loading-blobs-overlay">
           <LoadingBlobs />
         </div>
@@ -140,6 +146,7 @@ function ChatAppContent() {
               onFocusButtonClick={() => setIsProjectModalOpen(true)}
               projectData={projectData}
               isMinimized={isMinimized}
+              isFadingOut={isFadingOut}
             />
             {selectedProject ? (
               <ChatArea
@@ -147,11 +154,13 @@ function ChatAppContent() {
                 messages={messages[currentChannel] || []}
                 onSendMessage={addMessage}
                 isMinimized={isMinimized}
+                isFadingOut={isFadingOut}
               />
             ) : isFocusMode ? (
               <FocusMode
                 onChannelChange={setCurrentChannel}
                 currentChannel={currentChannel}
+                isFadingOut={isFadingOut}
               />
             ) : (
               <ChatArea
@@ -159,6 +168,7 @@ function ChatAppContent() {
                 messages={messages[currentChannel] || []}
                 onSendMessage={addMessage}
                 isMinimized={isMinimized}
+                isFadingOut={isFadingOut}
               />
             )}
           </div>

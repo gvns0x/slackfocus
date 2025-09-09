@@ -3,7 +3,7 @@ import { useFocus } from '../../contexts/FocusContext';
 import Avatar from '../common/Avatar';
 import './ChatArea.css';
 
-const ChatArea = ({ channel, messages, onSendMessage, isMinimized }) => {
+const ChatArea = ({ channel, messages, onSendMessage, isMinimized, isFadingOut }) => {
   const [newMessage, setNewMessage] = useState('');
   const messagesEndRef = useRef(null);
   const { selectedProject, isLoading } = useFocus();
@@ -31,7 +31,7 @@ const ChatArea = ({ channel, messages, onSendMessage, isMinimized }) => {
   // Show focusing state when a project is selected
   if (selectedProject) {
     return (
-      <div className={`chat-area ${isMinimized ? 'minimize' : ''}`}>
+      <div className={`chat-area ${isMinimized ? 'minimize' : ''} ${isFadingOut ? 'fading-out' : ''}`}>
         <div className="chat-header">
           <div className="channel-info">
             <span className="channel-name">Focus Mode</span>
@@ -56,7 +56,7 @@ const ChatArea = ({ channel, messages, onSendMessage, isMinimized }) => {
   }
 
   return (
-    <div className="chat-area">
+    <div className={`chat-area ${isFadingOut ? 'fading-out' : ''}`}>
       <div className="chat-header">
         <div className="channel-info">
           <span className="channel-name">{channel}</span>

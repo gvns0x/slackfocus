@@ -4,7 +4,7 @@ import Avatar from '../common/Avatar';
 import Tooltip from '../common/Tooltip';
 import './Sidebar.css';
 
-const Sidebar = ({ channels, currentChannel, onChannelChange, projectData, isMinimized }) => {
+const Sidebar = ({ channels, currentChannel, onChannelChange, projectData, isMinimized, isFadingOut }) => {
   const { selectedProject, isLoading } = useFocus();
   const [expandedChannels, setExpandedChannels] = useState(new Set());
 
@@ -50,7 +50,7 @@ const Sidebar = ({ channels, currentChannel, onChannelChange, projectData, isMin
   const people = projectData ? projectData.people : defaultPeople;
 
   return (
-    <div className={`sidebar ${isMinimized ? 'minimize' : ''}`}>
+    <div className={`sidebar ${isMinimized ? 'minimize' : ''} ${isFadingOut ? 'fading-out' : ''}`}>
       <div className="sidebar-header">
         <div className="workspace-info">
           <Avatar userInitials="SF" size="medium" className="workspace-avatar" />
