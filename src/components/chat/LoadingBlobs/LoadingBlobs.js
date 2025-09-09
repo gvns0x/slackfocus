@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
 import './LoadingBlobs.css'
 
 const LoadingBlobs = () => {
@@ -8,8 +9,8 @@ const LoadingBlobs = () => {
         const blobs = blobRefs.current;
 
         blobs.forEach((blob, i) => {
-            if (blob && window.gsap) {
-                window.gsap.to(blob, {
+            if (blob) {
+                gsap.to(blob, {
                     x: () => 70,
                     y: () => 70 * Math.random() / 10,
                     duration: 2,

@@ -4,26 +4,27 @@ import Avatar from '../common/Avatar';
 import Tooltip from '../common/Tooltip';
 import './Sidebar.css';
 
-const Sidebar = ({ channels, currentChannel, onChannelChange, onFocusButtonClick, onFocusButtonHover, projectData }) => {
-  const { selectedProject, isLoading, exitFocusMode } = useFocus();
+const Sidebar = ({ channels, currentChannel, onChannelChange, projectData, isMinimized }) => {
+  const { selectedProject, isLoading } = useFocus();
   const [expandedChannels, setExpandedChannels] = useState(new Set());
 
-  const handleFocusButtonMouseEnter = () => {
-    if (onFocusButtonHover) {
-      onFocusButtonHover(true);
-    }
-  };
+  // Unused handlers (keeping for potential future use)
+  // const handleFocusButtonMouseEnter = () => {
+  //   if (onFocusButtonHover) {
+  //     onFocusButtonHover(true);
+  //   }
+  // };
 
-  const handleFocusButtonMouseLeave = () => {
-    if (onFocusButtonHover) {
-      onFocusButtonHover(false);
-    }
-  };
+  // const handleFocusButtonMouseLeave = () => {
+  //   if (onFocusButtonHover) {
+  //     onFocusButtonHover(false);
+  //   }
+  // };
 
-  const handleExitFocus = (e) => {
-    e.stopPropagation();
-    exitFocusMode();
-  };
+  // const handleExitFocus = (e) => {
+  //   e.stopPropagation();
+  //   exitFocusMode();
+  // };
 
   const handleDropdownToggle = (channelId, e) => {
     e.stopPropagation();
@@ -49,7 +50,7 @@ const Sidebar = ({ channels, currentChannel, onChannelChange, onFocusButtonClick
   const people = projectData ? projectData.people : defaultPeople;
 
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${isMinimized ? 'minimize' : ''}`}>
       <div className="sidebar-header">
         <div className="workspace-info">
           <Avatar userInitials="SF" size="medium" className="workspace-avatar" />

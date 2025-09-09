@@ -1,16 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useFocus } from '../../contexts/FocusContext';
 import Avatar from '../common/Avatar';
 import './ChatArea.css';
 
-const ChatArea = ({ channel, messages, onSendMessage }) => {
+const ChatArea = ({ channel, messages, onSendMessage, isMinimized }) => {
   const [newMessage, setNewMessage] = useState('');
   const messagesEndRef = useRef(null);
   const { selectedProject, isLoading } = useFocus();
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
 
   // Remove this useEffect entirely:
   // useEffect(() => {
@@ -35,7 +31,7 @@ const ChatArea = ({ channel, messages, onSendMessage }) => {
   // Show focusing state when a project is selected
   if (selectedProject) {
     return (
-      <div className="chat-area">
+      <div className={`chat-area ${isMinimized ? 'minimize' : ''}`}>
         <div className="chat-header">
           <div className="channel-info">
             <span className="channel-name">Focus Mode</span>

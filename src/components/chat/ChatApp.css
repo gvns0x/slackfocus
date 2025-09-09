@@ -18,6 +18,7 @@
   flex: 1;
   min-height: 0;
   gap: 4px;
+  position: relative;
 }
 
 .chat-app:hover {
@@ -112,6 +113,11 @@
 
 .minimize {
   height: 5px;
+}
+
+/* Ensure elements can be animated by GSAP */
+.sidebar, .chat-area {
+  will-change: transform;
 }
 
 .ui-version-mobile-redesign {
@@ -363,5 +369,21 @@
 .exit-mobile-redesign-btn:active {
   transform: scale(0.95);
 }
+
+/* Loading Blobs Overlay */
+.loading-blobs-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 58px; /* 54px input + 4px gap */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  z-index: 1000;
+  pointer-events: none;
+}
+
 
 

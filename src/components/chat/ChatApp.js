@@ -1,17 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Sidebar from './Sidebar';
 import ChatArea from './ChatArea';
 import FocusMode from './FocusMode';
 import ProjectSearchModal from './ProjectSearchModal';
 import Avatar from '../common/Avatar';
+import LoadingBlobs from './LoadingBlobs/LoadingBlobs';
 import { FocusProvider, useFocus } from '../../contexts/FocusContext';
 import './ChatApp.css';
+import { gsap } from 'gsap';
 
 function ChatAppContent() {
   const [currentChannel, setCurrentChannel] = useState('general');
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
   const [globalInputValue, setGlobalInputValue] = useState('');
   const [uiVersion, setUiVersion] = useState('default'); // 'default' or 'mobile-redesign'
+  const [isMinimized, setIsMinimized] = useState(false);
+  const [showLoadingBlobs, setShowLoadingBlobs] = useState(false);
+  const chatAppMainRef = useRef(null);
+
   const { isFocusMode, selectedProject, getProjectData } = useFocus();
   const [messages, setMessages] = useState({
     general: [
@@ -63,8 +69,10 @@ function ChatAppContent() {
   const handleGlobalInputSubmit = (e) => {
     e.preventDefault();
     if (globalInputValue.trim()) {
-      // Check if the input contains "mobile redesign" to switch UI versions
-      if (globalInputValue.toLowerCase().includes('mobile redesign')) {
+      // Check if the input contains "mr" to trigger the loading sequence
+      if (globalInputValue.toLowerCase().includes('mr')) {
+        setShowLoadingBlobs(true);
+      } else if (globalInputValue.toLowerCase().includes('mobile redesign')) {
         setUiVersion('mobile-redesign');
       } else if (globalInputValue.toLowerCase().includes('default') || globalInputValue.toLowerCase().includes('back to normal')) {
         setUiVersion('default');
@@ -79,35 +87,78 @@ function ChatAppContent() {
     setGlobalInputValue(e.target.value);
   };
 
+  useEffect(() => {
+    if (!showLoadingBlobs) return;
+
+    const main = chatAppMainRef.current;
+    if (!main) return;
+
+    const tl = gsap.timeline();
+
+    // Fade out the default content
+    tl.to(main, { 
+      opacity: 0, 
+      duration: 0.5, 
+      ease: "power2.out" 
+    });
+
+    // After 7 seconds, show mobile redesign with smooth animation
+    tl.to({}, { duration: 7 }); // Wait 7 seconds
+
+    tl.add(() => {
+      setUiVersion('mobile-redesign');
+      setShowLoadingBlobs(false);
+      setIsMinimized(false);
+    });
+
+    // Animate mobile redesign in
+    tl.fromTo(main, 
+      { opacity: 0, scale: 0.8, y: 20 },
+      { opacity: 1, scale: 1, y: 0, duration: 0.8, ease: "power2.out" }
+    );
+
+    return () => tl.kill();
+  }, [showLoadingBlobs]);
+
   return (
     <div className={`chat-app ${isProjectModalOpen ? 'chat-app--modal-open' : ''}`}>
+      {/* Loading Blobs Overlay */}
+      {showLoadingBlobs && (
+        <div className="loading-blobs-overlay">
+          <LoadingBlobs />
+        </div>
+      )}
+      
       {/* DEFAULT UI VERSION */}
       {uiVersion === 'default' && (
         <div className="ui-version-default">
-          <div className="chat-app-main">
-            <Sidebar 
-              channels={channels} 
-              currentChannel={currentChannel} 
+          <div className="chat-app-main" ref={chatAppMainRef}>
+            <Sidebar
+              channels={channels}
+              currentChannel={currentChannel}
               onChannelChange={setCurrentChannel}
               onFocusButtonClick={() => setIsProjectModalOpen(true)}
               projectData={projectData}
+              isMinimized={isMinimized}
             />
             {selectedProject ? (
-              <ChatArea 
+              <ChatArea
                 channel={currentChannel}
                 messages={messages[currentChannel] || []}
                 onSendMessage={addMessage}
+                isMinimized={isMinimized}
               />
             ) : isFocusMode ? (
-              <FocusMode 
+              <FocusMode
                 onChannelChange={setCurrentChannel}
                 currentChannel={currentChannel}
               />
             ) : (
-              <ChatArea 
+              <ChatArea
                 channel={currentChannel}
                 messages={messages[currentChannel] || []}
                 onSendMessage={addMessage}
+                isMinimized={isMinimized}
               />
             )}
           </div>
