@@ -72,6 +72,39 @@
   color: #6c757d;
 }
 
+/* Shimmer effect for generating interface text */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes shimmer-mask {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.global-input.generating::placeholder {
+  background: linear-gradient(
+    90deg,
+    #6c757d 40%,
+    rgba(255, 0, 0, 0.8) 50%,
+    #6c757d 60%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer-mask 2.5s ease-in-out infinite;
+}
+
 .global-input-actions {
   display: flex;
   align-items: center;
