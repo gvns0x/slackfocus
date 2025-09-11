@@ -4,16 +4,18 @@
 
 .blob {
     position: absolute;
-    width: 10px;
-    height: 100px;
+    top: 40%;
+    left: 40%;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
     background: radial-gradient(circle at 30% 30%, #ff6ec7, #5b5bff);
     filter: blur(40px);
-    opacity: 0.8;
+    opacity: .7;
   }
 
   .blob:nth-child(2) {
-    background: radial-gradient(circle at 30% 30%, #00f0ff, #0080ff);
+    background: radial-gradient(circle at 100% 30%, #00f0ff, #0080ff);
     width: 60px;
     height: 60px;
   }

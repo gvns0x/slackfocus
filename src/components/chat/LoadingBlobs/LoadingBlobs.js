@@ -18,18 +18,34 @@ const LoadingBlobs = () => {
             );
         }
 
-        // Animate the blobs
+        // Animate the blobs with changing positions
         blobs.forEach((blob, i) => {
             if (blob) {
-                gsap.to(blob, {
-                    x: () => 200 * -.5,
-                    y: () => 200 * -.3,
-                    duration: 2,
-                    repeat: -1,
-                    yoyo: true,
-                    ease: "sine.inOut",
-                    delay: i * .3
+                // Create a timeline for each blob to control the changing positions
+                const tl = gsap.timeline({ repeat: -1 });
+                
+                // Define multiple different positions for variety
+                const positions = [
+                    { x: 200 * -0.5, y: 200 * -0.3 },
+                    { x: 200 * 0.3, y: 200 * -0.4 },
+                    { x: 200 * -0.5, y: 200 * 0.2 },
+                    { x: 200 * 0.1, y: 200 * 0.4 },
+                    { x: 200 * -0.2, y: 200 * -0.3 },
+                    { x: 200 * 0.4, y: 200 * 0.1 }
+                ];
+                
+                // Add each position as a separate animation in the timeline
+                positions.forEach((pos, index) => {
+                    tl.to(blob, {
+                        x: pos.x,
+                        y: pos.y,
+                        duration: 1.8,
+                        ease: "sine.inOut"
+                    });
                 });
+                
+                // Start the timeline with a delay for each blob
+                tl.delay(i * 0.3);
             }
         });
     }, []);
@@ -39,6 +55,7 @@ const LoadingBlobs = () => {
             <div ref={el => blobRefs.current[0] = el} className="blob"></div>
             <div ref={el => blobRefs.current[1] = el} className="blob"></div>
             <div ref={el => blobRefs.current[2] = el} className="blob"></div>
+            {/* <div ref={el => blobRefs.current[3] = el} className="blob"></div> */}
         </div>
     );
 };
