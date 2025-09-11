@@ -22,13 +22,13 @@ const LoadingBlobs = () => {
         blobs.forEach((blob, i) => {
             if (blob) {
                 gsap.to(blob, {
-                    x: () => 70,
-                    y: () => 70 * Math.random() / 10,
+                    x: () => 200 * -.5,
+                    y: () => 200 * -.3,
                     duration: 2,
                     repeat: -1,
                     yoyo: true,
                     ease: "sine.inOut",
-                    delay: 0
+                    delay: i * .3
                 });
             }
         });

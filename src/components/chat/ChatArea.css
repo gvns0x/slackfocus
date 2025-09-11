@@ -12,11 +12,18 @@
   /* box-shadow: -4px 4px 20px rgba(0, 0, 0, 0.15); */
   z-index: 10;
   border-radius: 20px;
-  transition: opacity .2s ease-out;
+  transition:
+  opacity .3s ease-out,
+  /* scale .4s ease-out, */
+  translate .25s ease-out,
+  filter .1s ease-out;
 }
 
 .chat-area.fading-out {
-  opacity: 0;
+   /* scale: 0; */
+   translate: 0% -50px;
+   opacity: 0;
+   filter: blur(10px);
 }
 
 .chat-header {

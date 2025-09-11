@@ -6,7 +6,7 @@
   overflow-y: auto;
   position: relative;
   border-radius: 0 24px 24px 0;
-  transition: opacity 1s ease-out;
+  transition: opacity .2s ease-out;
 }
 
 .focus-mode.fading-out {
