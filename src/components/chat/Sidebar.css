@@ -16,7 +16,7 @@
   transition:
   opacity .3s ease-out,
   /* scale .4s ease-out, */
-  translate .25s ease-out,
+  translate .25s ease,
   filter .1s ease-out;
 }
 
