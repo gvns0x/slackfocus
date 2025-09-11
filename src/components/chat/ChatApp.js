@@ -18,6 +18,8 @@ function ChatAppContent() {
   const [showLoadingBlobs, setShowLoadingBlobs] = useState(false);
   const [loadingBlobsVisible, setLoadingBlobsVisible] = useState(false);
   const [isFadingOut, setIsFadingOut] = useState(false);
+  const [isGeneratingInterface, setIsGeneratingInterface] = useState(false);
+  const [animatedPlaceholder, setAnimatedPlaceholder] = useState("Generating a new interface...");
   const chatAppMainRef = useRef(null);
 
   const { isFocusMode, selectedProject, getProjectData } = useFocus();
@@ -70,14 +72,24 @@ function ChatAppContent() {
 
   const handleGlobalInputSubmit = (e) => {
     e.preventDefault();
-    if (globalInputValue.trim()) {
+    if (globalInputValue.trim() && !isGeneratingInterface) {
+      // Set generating state for any prompt
+      setIsGeneratingInterface(true);
+      
       // Check if the input contains "mr" to trigger the loading sequence
       if (globalInputValue.toLowerCase().includes('mr')) {
         setShowLoadingBlobs(true);
       } else if (globalInputValue.toLowerCase().includes('mobile redesign')) {
         setUiVersion('mobile-redesign');
+        // Reset generating state after UI change
+        setTimeout(() => setIsGeneratingInterface(false), 100);
       } else if (globalInputValue.toLowerCase().includes('default') || globalInputValue.toLowerCase().includes('back to normal')) {
         setUiVersion('default');
+        // Reset generating state after UI change
+        setTimeout(() => setIsGeneratingInterface(false), 100);
+      } else {
+        // For other prompts, reset generating state after a delay
+        setTimeout(() => setIsGeneratingInterface(false), 2000);
       }
       
       console.log('Global input submitted:', globalInputValue);
@@ -110,6 +122,7 @@ function ChatAppContent() {
       setLoadingBlobsVisible(false);
       setIsFadingOut(false);
       setIsMinimized(false);
+      setIsGeneratingInterface(false);
     }, 8000); // 1 second fade + 7 seconds wait
 
     return () => {
@@ -125,6 +138,22 @@ function ChatAppContent() {
       setIsFadingOut(false);
     }
   }, [showLoadingBlobs]);
+
+  // Animate placeholder dots when generating
+  useEffect(() => {
+    if (!isGeneratingInterface) return;
+
+    const baseText = "Generating a new interface";
+    const dots = ["", ".", "..", "..."];
+    let dotIndex = 0;
+
+    const interval = setInterval(() => {
+      setAnimatedPlaceholder(baseText + dots[dotIndex]);
+      dotIndex = (dotIndex + 1) % dots.length;
+    }, 500);
+
+    return () => clearInterval(interval);
+  }, [isGeneratingInterface]);
 
   return (
     <div className={`chat-app ${isProjectModalOpen ? 'chat-app--modal-open' : ''}`}>
@@ -224,8 +253,15 @@ function ChatAppContent() {
               type="text"
               value={globalInputValue}
               onChange={handleGlobalInputChange}
-              placeholder={uiVersion === 'mobile-redesign' ? "Type to search files..." : "Type a message or command..."}
-              className={`global-input ${uiVersion === 'mobile-redesign' ? 'mobile-redesign-input-field' : ''}`}
+              disabled={isGeneratingInterface}
+              placeholder={
+                isGeneratingInterface 
+                  ? animatedPlaceholder
+                  : uiVersion === 'mobile-redesign' 
+                    ? "Type to search files..." 
+                    : "Type a message or command..."
+              }
+              className={`global-input ${uiVersion === 'mobile-redesign' ? 'mobile-redesign-input-field' : ''} ${isGeneratingInterface ? 'generating' : ''}`}
             />
             <div className="global-input-actions">
               {uiVersion === 'mobile-redesign' ? (
@@ -237,7 +273,7 @@ function ChatAppContent() {
                 >
                   <span className="icon">×</span>
                 </button>
-              ) : globalInputValue.trim() ? (
+              ) : globalInputValue.trim() && !isGeneratingInterface ? (
                 <button type="submit" className="global-input-button">
                   <span className="icon">➤</span>
                 </button>
