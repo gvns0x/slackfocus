@@ -246,9 +246,9 @@ function ChatAppContent() {
       )}
       
       {/* Global Input Field - Always visible */}
-      <div className={`global-input-container ${uiVersion === 'mobile-redesign' ? 'mobile-redesign-input' : ''}`}>
+      <div className={`global-input-container ${uiVersion === 'mobile-redesign' ? 'mobile-redesign-input' : ''} ${isGeneratingInterface ? 'generating' : ''}`}>
         <form onSubmit={handleGlobalInputSubmit} className="global-input-form">
-          <div className={`global-input-wrapper ${uiVersion === 'mobile-redesign' ? 'mobile-redesign-wrapper' : ''}`}>
+          <div className={`global-input-wrapper ${uiVersion === 'mobile-redesign' ? 'mobile-redesign-wrapper' : ''} ${isGeneratingInterface ? 'generating' : ''}`}>
             <input
               type="text"
               value={globalInputValue}
@@ -258,8 +258,8 @@ function ChatAppContent() {
                 isGeneratingInterface 
                   ? animatedPlaceholder
                   : uiVersion === 'mobile-redesign' 
-                    ? "Type to search files..." 
-                    : "Type a message or command..."
+                    ? "What do you want to focus on?" 
+                    : "What do you want to focus on?"
               }
               className={`global-input ${uiVersion === 'mobile-redesign' ? 'mobile-redesign-input-field' : ''} ${isGeneratingInterface ? 'generating' : ''}`}
             />

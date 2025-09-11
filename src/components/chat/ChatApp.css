@@ -33,9 +33,14 @@
 /* Global Input Field Styles */
 .global-input-container {
   background-color: #ffffff;
-  border-radius: 24px;
+  border-radius: 20px;
   height: 54px;
   flex-shrink: 0;
+  transition: background-color 0.3s ease;
+}
+
+.global-input-container.generating {
+  background-color: rgba(0,0,0,.04);
 }
 
 .global-input-form {
@@ -49,8 +54,12 @@
   background-color: #fff;
   border-radius: 20px;
   padding: 8px 12px;
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease, background-color 0.3s ease;
   height: 100%;
+}
+
+.global-input-wrapper.generating {
+  background-color: rgba(0, 0, 0, .01);
 }
 
 .global-input-wrapper:focus-within {
@@ -72,37 +81,51 @@
   color: #6c757d;
 }
 
-/* Shimmer effect for generating interface text */
-@keyframes shimmer {
+/* White mask animation for generating interface text */
+@keyframes whiteMask {
   0% {
-    background-position: -200% 0;
+    background-position: -100% 0;
   }
   100% {
-    background-position: 200% 0;
-  }
-}
-
-@keyframes shimmer-mask {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
+    background-position: 100% 0;
   }
 }
 
 .global-input.generating::placeholder {
   background: linear-gradient(
     90deg,
-    #6c757d 40%,
-    rgba(255, 0, 0, 0.8) 50%,
-    #6c757d 60%
+    #6c757d 0%,
+    #6c757d 20%,
+    #ffffff 40%,
+    #ffffff 60%,
+    #6c757d 80%,
+    #6c757d 100%
   );
-  background-size: 200% 100%;
+  background-size: 300% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: shimmer-mask 2.5s ease-in-out infinite;
+  animation: whiteMask 2s ease-in-out infinite;
+  color: transparent !important;
+  display: inline-block;
+}
+
+/* Fallback white mask effect for browsers that don't support background-clip: text */
+@supports not (background-clip: text) {
+  .global-input.generating::placeholder {
+    background: none;
+    color: #ffffff !important;
+    animation: textWhiteMask 1.5s ease-in-out infinite;
+  }
+}
+
+@keyframes textWhiteMask {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 .global-input-actions {
@@ -176,7 +199,7 @@
   align-items: center;
   padding: 16px;
   background: #ffffff;
-  border-radius: 24px;
+  border-radius: 20px;
   
 }
 
@@ -362,11 +385,21 @@
 .mobile-redesign-input .global-input-container {
   background-color: #000000;
   border-top: none;
+  transition: background-color 0.3s ease;
+}
+
+.mobile-redesign-input .global-input-container.generating {
+  background-color: #ff0000;
 }
 
 .mobile-redesign-wrapper {
   background-color: #000000;
   border: 1px solid #333333;
+  transition: background-color 0.3s ease;
+}
+
+.mobile-redesign-wrapper.generating {
+  background-color: #ff0000;
 }
 
 .mobile-redesign-input-field {
@@ -375,6 +408,34 @@
 
 .mobile-redesign-input-field::placeholder {
   color: #999999;
+}
+
+/* Ensure white mask effect works in mobile redesign mode too */
+.mobile-redesign-input-field.generating::placeholder {
+  background: linear-gradient(
+    90deg,
+    #999999 0%,
+    #999999 30%,
+    #ffffff 50%,
+    #999999 70%,
+    #999999 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: whiteMask 1.5s ease-in-out infinite;
+  color: transparent !important;
+  display: inline-block;
+}
+
+/* Fallback for mobile redesign */
+@supports not (background-clip: text) {
+  .mobile-redesign-input-field.generating::placeholder {
+    background: none;
+    color: #ffffff !important;
+    animation: textWhiteMask 1.5s ease-in-out infinite;
+  }
 }
 
 .exit-mobile-redesign-btn {
