@@ -20,6 +20,7 @@ function ChatAppContent() {
   const [isFadingOut, setIsFadingOut] = useState(false);
   const [isGeneratingInterface, setIsGeneratingInterface] = useState(false);
   const [animatedPlaceholder, setAnimatedPlaceholder] = useState("Generating a new interface...");
+  const [mobileElementsAnimating, setMobileElementsAnimating] = useState(false);
   const chatAppMainRef = useRef(null);
 
   const { isFocusMode, selectedProject, getProjectData } = useFocus();
@@ -81,10 +82,15 @@ function ChatAppContent() {
         setShowLoadingBlobs(true);
       } else if (globalInputValue.toLowerCase().includes('mobile redesign')) {
         setUiVersion('mobile-redesign');
+        // Start mobile elements animation after a brief delay
+        setTimeout(() => {
+          setMobileElementsAnimating(true);
+        }, 50);
         // Reset generating state after UI change
         setTimeout(() => setIsGeneratingInterface(false), 100);
       } else if (globalInputValue.toLowerCase().includes('default') || globalInputValue.toLowerCase().includes('back to normal')) {
         setUiVersion('default');
+        setMobileElementsAnimating(false);
         // Reset generating state after UI change
         setTimeout(() => setIsGeneratingInterface(false), 100);
       } else {
@@ -123,6 +129,11 @@ function ChatAppContent() {
       setIsFadingOut(false);
       setIsMinimized(false);
       setIsGeneratingInterface(false);
+      
+      // Start mobile elements animation after a brief delay
+      setTimeout(() => {
+        setMobileElementsAnimating(true);
+      }, 50);
     }, 8000); // 1 second fade + 7 seconds wait
 
     return () => {
@@ -136,6 +147,7 @@ function ChatAppContent() {
     if (!showLoadingBlobs) {
       setLoadingBlobsVisible(false);
       setIsFadingOut(false);
+      // Don't reset mobileElementsAnimating here as it should persist after loading
     }
   }, [showLoadingBlobs]);
 
@@ -209,7 +221,7 @@ function ChatAppContent() {
         <div className="ui-version-mobile-redesign">
           <div className="mobile-redesign-layout">
             {/* Top Navigation Bar */}
-            <div className="mobile-nav-bar">
+            <div className={`mobile-nav-bar ${mobileElementsAnimating ? 'animated-in' : 'animating-in'}`}>
               <div className="nav-left">
                 <div className="workspace-info">
                   <Avatar userInitials="SF" size="medium" className="workspace-avatar" />
@@ -224,7 +236,7 @@ function ChatAppContent() {
             </div>
             
             {/* Main Content Area */}
-            <div className="mobile-main-content">
+            <div className={`mobile-main-content ${mobileElementsAnimating ? 'animated-in' : 'animating-in'}`}>
             
               
               <div className="file-display-area">

@@ -200,7 +200,22 @@
   padding: 16px;
   background: #ffffff;
   border-radius: 20px;
-  
+  transition:
+    opacity 0.3s ease-out,
+    translate 0.25s ease-out,
+    filter 0.1s ease-out;
+}
+
+.mobile-nav-bar.animating-in {
+  translate: 0% -50px;
+  opacity: 0;
+  filter: blur(10px);
+}
+
+.mobile-nav-bar.animated-in {
+  translate: 0% 0px;
+  opacity: 1;
+  filter: blur(0px);
 }
 
 .nav-left {
@@ -265,6 +280,22 @@
   gap: 16px;
   border-radius: 24px;
   background-color: #fff;
+  transition:
+    opacity 0.3s ease-out,
+    translate 0.25s ease-out,
+    filter 0.1s ease-out;
+}
+
+.mobile-main-content.animating-in {
+  translate: 0% -50px;
+  opacity: 0;
+  filter: blur(10px);
+}
+
+.mobile-main-content.animated-in {
+  translate: 0% 0px;
+  opacity: 1;
+  filter: blur(0px);
 }
 
 .content-header {

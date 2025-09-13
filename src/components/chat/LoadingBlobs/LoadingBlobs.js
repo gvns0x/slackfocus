@@ -39,7 +39,7 @@ const LoadingBlobs = () => {
                     tl.to(blob, {
                         x: pos.x,
                         y: pos.y,
-                        duration: 1.8,
+                        duration: 1.5,
                         ease: "sine.inOut"
                     });
                 });
