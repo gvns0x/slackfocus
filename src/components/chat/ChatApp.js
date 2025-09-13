@@ -34,6 +34,10 @@ function ChatAppContent() {
   const [isInputHovered, setIsInputHovered] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const chatAppMainRef = useRef(null);
+  
+  // Loading duration controls
+  const [firstLoadingDuration, setFirstLoadingDuration] = useState(8); // Duration for default -> mobile-redesign
+  const [secondLoadingDuration, setSecondLoadingDuration] = useState(3.5); // ⚠️ CHANGE THIS VALUE TO CONTROL SECOND LOADING DURATION (mobile-redesign -> feedback)
 
   // Placeholder images for the file thumbnails
   const placeholderImages = [
@@ -212,7 +216,10 @@ function ChatAppContent() {
     // Determine which view to transition to based on current UI version
     const targetView = uiVersion === 'mobile-redesign' ? 'feedback' : 'mobile-redesign';
     
-    // After 7 more seconds, show the target view
+    // Determine loading duration based on current UI version
+    const loadingDuration = uiVersion === 'default' ? firstLoadingDuration : secondLoadingDuration;
+    
+    // After the specified duration, show the target view
     const showTargetTimer = setTimeout(() => {
       setUiVersion(targetView);
       setShowLoadingBlobs(false);
@@ -237,13 +244,13 @@ function ChatAppContent() {
           setFeedbackElementsAnimating(true);
         }, 50);
       }
-    }, 8000); // 1 second fade + 7 seconds wait for both views
+    }, loadingDuration * 1000); // Convert seconds to milliseconds
 
     return () => {
       clearTimeout(showBlobsTimer);
       clearTimeout(showTargetTimer);
     };
-  }, [showLoadingBlobs, uiVersion]);
+  }, [showLoadingBlobs, uiVersion, firstLoadingDuration, secondLoadingDuration]);
 
   // Reset states when showLoadingBlobs changes
   useEffect(() => {
@@ -275,7 +282,7 @@ function ChatAppContent() {
       {/* Loading Blobs Overlay */}
       {showLoadingBlobs && loadingBlobsVisible && (
         <div className="loading-blobs-overlay">
-          <LoadingBlobs />
+          <LoadingBlobs duration={uiVersion === 'default' ? firstLoadingDuration : secondLoadingDuration} />
         </div>
       )}
       

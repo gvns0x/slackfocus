@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import './LoadingBlobs.css'
 
-const LoadingBlobs = () => {
+const LoadingBlobs = ({ duration = 8 }) => {
     const blobRefs = useRef([]);
     const containerRef = useRef(null);
 
