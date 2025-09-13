@@ -30,7 +30,7 @@ function ChatAppContent() {
   const [animatedPlaceholder, setAnimatedPlaceholder] = useState("Generating a new interface...");
   const [mobileElementsAnimating, setMobileElementsAnimating] = useState(false);
   const [feedbackElementsAnimating, setFeedbackElementsAnimating] = useState(false);
-  const [defaultElementsAnimating, setDefaultElementsAnimating] = useState(false);
+  const [defaultElementsAnimating, setDefaultElementsAnimating] = useState(true);
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [isInputHovered, setIsInputHovered] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
@@ -134,8 +134,8 @@ function ChatAppContent() {
       // Set generating state for any prompt
       setIsGeneratingInterface(true);
       
-      // Check if the input contains "mr" to trigger the loading sequence
-      if (globalInputValue.toLowerCase().includes('mr')) {
+      // For any text input in default view, trigger the loading sequence
+      if (uiVersion === 'default') {
         setShowLoadingBlobs(true);
       } else if (globalInputValue.toLowerCase().includes('mobile redesign')) {
         setUiVersion('mobile-redesign');
@@ -275,10 +275,10 @@ function ChatAppContent() {
     // Start the CSS fade-out for both default and mobile redesign views
     setIsFadingOut(true);
 
-    // Show LoadingBlobs after 1 second (when CSS transition completes)
+    // Show LoadingBlobs after CSS transition completes (300ms for opacity + buffer)
     const showBlobsTimer = setTimeout(() => {
       setLoadingBlobsVisible(true);
-    }, 100);
+    }, 400);
 
     // Determine which view to transition to based on current UI version
     const targetView = uiVersion === 'mobile-redesign' ? 'feedback' : 'mobile-redesign';

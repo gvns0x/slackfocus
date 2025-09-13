@@ -260,9 +260,9 @@
 }
 
 /* Ensure elements can be animated by GSAP */
-.sidebar, .chat-area {
+/* .sidebar, .chat-area {
   will-change: transform;
-}
+} */
 
 .ui-version-mobile-redesign {
   flex: 1;

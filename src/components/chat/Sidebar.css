@@ -13,6 +13,10 @@
   z-index: 1;
   isolation: isolate;
   gap: 32px;
+  /* Initial values for smooth transitions */
+  translate: 0% 0px;
+  opacity: 1;
+  filter: blur(0px);
   transition:
   opacity .3s ease-out,
   /* scale .4s ease-out, */
@@ -22,9 +26,9 @@
 
 .sidebar.fading-out {
   /* scale: 0; */
-  translate: 0% -50px;
-  opacity: 0;
-  filter: blur(10px);
+  translate: 0% -50px !important;
+  opacity: 0 !important;
+  filter: blur(10px) !important;
 }
 
 .sidebar.animating-in {
