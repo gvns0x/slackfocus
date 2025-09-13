@@ -455,9 +455,8 @@
   justify-content: center;
   flex-wrap: wrap;
   flex: 0 0 auto;
-  height: 100px;
+  height: max-content;
   align-items: center;
-  padding: 10px 0;
 }
 
 .file-thumbnail {
@@ -469,34 +468,24 @@
   position: relative;
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.file-thumbnail::before {
-  content: '';
-  position: absolute;
-  top: 10%;
-  left: 10%;
-  right: 10%;
-  bottom: 10%;
-  background: linear-gradient(45deg, #dee2e6 25%, transparent 25%), 
-              linear-gradient(-45deg, #dee2e6 25%, transparent 25%), 
-              linear-gradient(45deg, transparent 75%, #dee2e6 75%), 
-              linear-gradient(-45deg, transparent 75%, #dee2e6 75%);
-  background-size: 8px 8px;
-  background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
-  border-radius: 2px;
+  opacity: .7;
+  transition: opacity .2s ease;
 }
 
 .file-thumbnail:hover {
-  border-color: #4A90E2;
-  transform: scale(1.05);
+  border-color: rgba(0,0,0,.3);
+  opacity: 1;
+}
+
+.file-thumbnail:active {
+  transform: scale(.98);
 }
 
 .file-thumbnail.selected {
-  border-color: #4A90E2;
+  border: 1px solid rgba(0,0,0,.5);
   border-width: 2px;
-  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+  border-radius: 10px;
+  opacity: 1;
 }
 
 .thumbnail-image {

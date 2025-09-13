@@ -9,6 +9,14 @@ import { FocusProvider, useFocus } from '../../contexts/FocusContext';
 import './ChatApp.css';
 import { gsap } from 'gsap';
 
+// Mobile images import
+import Mobile1 from '../../imgs/mobiles/MR_01.png'
+import Mobile2 from '../../imgs/mobiles/MR_02.png'
+import Mobile3 from '../../imgs/mobiles/MR_03.png'
+import Mobile4 from '../../imgs/mobiles/MR_04.png'
+import Mobile5 from '../../imgs/mobiles/MR_05.png'
+
+
 function ChatAppContent() {
   const [currentChannel, setCurrentChannel] = useState('general');
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
@@ -28,11 +36,11 @@ function ChatAppContent() {
 
   // Placeholder images for the file thumbnails
   const placeholderImages = [
-    'https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/content/app_screens/3bfa327e-5b9b-4274-9a13-2b34cf45d754.png',
-    'https://via.placeholder.com/200x150/7ED321/FFFFFF?text=Image+2',
-    'https://via.placeholder.com/200x150/F5A623/FFFFFF?text=Image+3',
-    'https://via.placeholder.com/200x150/BD10E0/FFFFFF?text=Image+4',
-    'https://via.placeholder.com/200x150/50E3C2/FFFFFF?text=Image+5'
+    Mobile1,
+    Mobile2,
+    Mobile3,
+    Mobile4,
+    Mobile5
   ];
 
   const { isFocusMode, selectedProject, getProjectData } = useFocus();
