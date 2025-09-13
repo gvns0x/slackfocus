@@ -23,7 +23,17 @@ function ChatAppContent() {
   const [mobileElementsAnimating, setMobileElementsAnimating] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [isInputHovered, setIsInputHovered] = useState(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const chatAppMainRef = useRef(null);
+
+  // Placeholder images for the file thumbnails
+  const placeholderImages = [
+    'https://bytescale.mobbin.com/FW25bBB/image/mobbin.com/prod/content/app_screens/3bfa327e-5b9b-4274-9a13-2b34cf45d754.png',
+    'https://via.placeholder.com/200x150/7ED321/FFFFFF?text=Image+2',
+    'https://via.placeholder.com/200x150/F5A623/FFFFFF?text=Image+3',
+    'https://via.placeholder.com/200x150/BD10E0/FFFFFF?text=Image+4',
+    'https://via.placeholder.com/200x150/50E3C2/FFFFFF?text=Image+5'
+  ];
 
   const { isFocusMode, selectedProject, getProjectData } = useFocus();
   const [messages, setMessages] = useState({
@@ -133,6 +143,10 @@ function ChatAppContent() {
     setShowLoadingBlobs(false);
     setLoadingBlobsVisible(false);
     setIsFadingOut(false);
+  };
+
+  const handleThumbnailClick = (index) => {
+    setSelectedImageIndex(index);
   };
 
 
@@ -261,8 +275,8 @@ function ChatAppContent() {
                 </div>
                 <div className="nav-tabs">
                   <div className="nav-tab active">Mobile redesign files</div>
-                  <div className="nav-tab dropd">CHANNELS ▼</div>
-                  <div className="nav-tab dropd">PEOPLE ▼</div>
+                  <div className="nav-tab dropd">CHANNELS ▾</div>
+                  <div className="nav-tab dropd">PEOPLE ▾</div>
                 </div>
               </div>
             </div>
@@ -273,15 +287,29 @@ function ChatAppContent() {
               
               <div className="file-display-area">
                 {/* Large main file placeholder */}
-                <div className="main-file-placeholder"></div>
+                <div className="main-file-placeholder">
+                  <img 
+                    src={placeholderImages[selectedImageIndex]} 
+                    alt={`Selected image ${selectedImageIndex + 1}`}
+                    className="main-display-image"
+                  />
+                </div>
                 
                 {/* File thumbnails below */}
                 <div className="file-thumbnails-row">
-                  <div className="file-thumbnail"></div>
-                  <div className="file-thumbnail"></div>
-                  <div className="file-thumbnail"></div>
-                  <div className="file-thumbnail"></div>
-                  <div className="file-thumbnail"></div>
+                  {placeholderImages.map((image, index) => (
+                    <div 
+                      key={index}
+                      className={`file-thumbnail ${selectedImageIndex === index ? 'selected' : ''}`}
+                      onClick={() => handleThumbnailClick(index)}
+                    >
+                      <img 
+                        src={image} 
+                        alt={`Thumbnail ${index + 1}`}
+                        className="thumbnail-image"
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
