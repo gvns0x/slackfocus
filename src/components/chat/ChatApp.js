@@ -29,6 +29,7 @@ function ChatAppContent() {
   const [isGeneratingInterface, setIsGeneratingInterface] = useState(false);
   const [animatedPlaceholder, setAnimatedPlaceholder] = useState("Generating a new interface...");
   const [mobileElementsAnimating, setMobileElementsAnimating] = useState(false);
+  const [feedbackElementsAnimating, setFeedbackElementsAnimating] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [isInputHovered, setIsInputHovered] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
@@ -143,6 +144,7 @@ function ChatAppContent() {
       } else if (globalInputValue.toLowerCase().includes('default') || globalInputValue.toLowerCase().includes('back to normal')) {
         setUiVersion('default');
         setMobileElementsAnimating(false);
+        setFeedbackElementsAnimating(false);
         // Reset generating state after UI change
         setTimeout(() => setIsGeneratingInterface(false), 100);
       } else if (uiVersion === 'mobile-redesign') {
@@ -226,6 +228,13 @@ function ChatAppContent() {
       if (targetView === 'mobile-redesign') {
         setTimeout(() => {
           setMobileElementsAnimating(true);
+        }, 50);
+      }
+      
+      // Start feedback elements animation after a brief delay (only for feedback)
+      if (targetView === 'feedback') {
+        setTimeout(() => {
+          setFeedbackElementsAnimating(true);
         }, 50);
       }
     }, 8000); // 1 second fade + 7 seconds wait for both views
@@ -370,7 +379,7 @@ function ChatAppContent() {
         <div className="ui-version-feedback">
           <div className="feedback-layout">
             {/* Top Navigation Bar */}
-            <div className="mobile-nav-bar animated-in">
+            <div className={`mobile-nav-bar ${feedbackElementsAnimating ? 'animated-in' : 'animating-in'} ${isFadingOut ? 'fading-out' : ''}`}>
               <div className="nav-left">
                 <div className="workspace-info">
                   <Avatar userInitials="SF" size="medium" className="workspace-avatar" />
@@ -387,7 +396,7 @@ function ChatAppContent() {
             {/* Main Content Area with Flex Row Layout */}
             <div className="feedback-main-content">
               {/* Left side - Mobile main content */}
-              <div className="mobile-main-content animated-in">
+              <div className={`mobile-main-content ${feedbackElementsAnimating ? 'animated-in' : 'animating-in'} ${isFadingOut ? 'fading-out' : ''}`}>
                 <div className="file-display-area">
                   {/* Large main file placeholder */}
                   <div className="main-file-placeholder">
@@ -418,7 +427,7 @@ function ChatAppContent() {
               </div>
 
               {/* Right side - Comments section */}
-              <div className="comments-section">
+              <div className={`comments-section ${feedbackElementsAnimating ? 'animated-in' : 'animating-in'} ${isFadingOut ? 'fading-out' : ''}`}>
                 <div className="comments-header">
                   <h3>Design Feedback</h3>
                   <div className="comments-count">{designComments[selectedImageIndex].length} comments</div>

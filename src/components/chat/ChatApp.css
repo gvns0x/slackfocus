@@ -687,6 +687,28 @@
   flex-direction: column;
   min-height: 0;
   overflow: hidden;
+  transition:
+    opacity 0.3s ease-out,
+    translate 0.25s ease-out,
+    filter 0.1s ease-out;
+}
+
+.comments-section.animating-in {
+  translate: 0% -50px;
+  opacity: 0;
+  filter: blur(10px);
+}
+
+.comments-section.animated-in {
+  translate: 0% 0px;
+  opacity: 1;
+  filter: blur(0px);
+}
+
+.comments-section.fading-out {
+  translate: 0% -50px;
+  opacity: 0;
+  filter: blur(10px);
 }
 
 .comments-header {
