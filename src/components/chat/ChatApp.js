@@ -21,6 +21,8 @@ function ChatAppContent() {
   const [isGeneratingInterface, setIsGeneratingInterface] = useState(false);
   const [animatedPlaceholder, setAnimatedPlaceholder] = useState("Generating a new interface...");
   const [mobileElementsAnimating, setMobileElementsAnimating] = useState(false);
+  const [isInputFocused, setIsInputFocused] = useState(false);
+  const [isInputHovered, setIsInputHovered] = useState(false);
   const chatAppMainRef = useRef(null);
 
   const { isFocusMode, selectedProject, getProjectData } = useFocus();
@@ -105,6 +107,52 @@ function ChatAppContent() {
 
   const handleGlobalInputChange = (e) => {
     setGlobalInputValue(e.target.value);
+  };
+
+  const handleInputFocus = () => {
+    setIsInputFocused(true);
+  };
+
+  const handleInputBlur = () => {
+    setIsInputFocused(false);
+  };
+
+  const handleInputMouseEnter = () => {
+    setIsInputHovered(true);
+  };
+
+  const handleInputMouseLeave = () => {
+    setIsInputHovered(false);
+  };
+
+  const handleStopGeneration = () => {
+    setIsGeneratingInterface(false);
+    setShowLoadingBlobs(false);
+    setLoadingBlobsVisible(false);
+    setIsFadingOut(false);
+  };
+
+  const getPlaceholderText = () => {
+    if (isGeneratingInterface) {
+      return animatedPlaceholder;
+    }
+    
+    const isInteractive = isInputFocused || isInputHovered;
+    
+    if (uiVersion === 'mobile-redesign') {
+      if (isInteractive) {
+        return "What do you want to focus on?";
+      } else {
+        return "Focusing on the Mobile redesign project";
+      }
+    }
+    
+    // Default UI version
+    if (isInteractive) {
+      return "What do you want to focus on?";
+    } else {
+      return selectedProject ? `Focusing on the ${selectedProject.name} project` : "What do you want to focus on?";
+    }
   };
 
   useEffect(() => {
@@ -260,23 +308,32 @@ function ChatAppContent() {
       {/* Global Input Field - Always visible */}
       <div className={`global-input-container ${uiVersion === 'mobile-redesign' ? 'mobile-redesign-input' : ''} ${isGeneratingInterface ? 'generating' : ''}`}>
         <form onSubmit={handleGlobalInputSubmit} className="global-input-form">
-          <div className={`global-input-wrapper ${uiVersion === 'mobile-redesign' ? 'mobile-redesign-wrapper' : ''} ${isGeneratingInterface ? 'generating' : ''}`}>
+          <div 
+            className={`global-input-wrapper ${uiVersion === 'mobile-redesign' ? 'mobile-redesign-wrapper' : ''} ${isGeneratingInterface ? 'generating' : ''}`}
+            onMouseEnter={handleInputMouseEnter}
+            onMouseLeave={handleInputMouseLeave}
+          >
             <input
               type="text"
               value={globalInputValue}
               onChange={handleGlobalInputChange}
+              onFocus={handleInputFocus}
+              onBlur={handleInputBlur}
               disabled={isGeneratingInterface}
-              placeholder={
-                isGeneratingInterface 
-                  ? animatedPlaceholder
-                  : uiVersion === 'mobile-redesign' 
-                    ? "What do you want to focus on?" 
-                    : "What do you want to focus on?"
-              }
+              placeholder={getPlaceholderText()}
               className={`global-input ${uiVersion === 'mobile-redesign' ? 'mobile-redesign-input-field' : ''} ${isGeneratingInterface ? 'generating' : ''}`}
             />
             <div className="global-input-actions">
-              {uiVersion === 'mobile-redesign' ? (
+              {isGeneratingInterface ? (
+                <button 
+                  type="button" 
+                  className="stop-generation-btn"
+                  onClick={handleStopGeneration}
+                  title="Stop generation"
+                >
+                  <span className="icon">⏹</span>
+                </button>
+              ) : uiVersion === 'mobile-redesign' ? (
                 <button 
                   type="button" 
                   className="exit-mobile-redesign-btn"
@@ -285,7 +342,7 @@ function ChatAppContent() {
                 >
                   <span className="icon">×</span>
                 </button>
-              ) : globalInputValue.trim() && !isGeneratingInterface ? (
+              ) : globalInputValue.trim() ? (
                 <button type="submit" className="global-input-button">
                   <span className="icon">➤</span>
                 </button>
