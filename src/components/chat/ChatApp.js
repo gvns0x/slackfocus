@@ -206,9 +206,9 @@ function ChatAppContent() {
 
   // UI version options for dropdown - only show generated versions
   const uiVersionOptions = [
-    { value: 'default', label: 'Default View' },
-    { value: 'mobile-redesign', label: 'Mobile Redesign' },
-    { value: 'feedback', label: 'Feedback View' }
+    { value: 'default', label: 'Default' },
+    { value: 'mobile-redesign', label: 'Mobile redesign' },
+    { value: 'feedback', label: 'Feedback' }
   ].filter(option => generatedVersions.has(option.value));
 
   const handleVersionChange = (newVersion) => {
