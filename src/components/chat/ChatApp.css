@@ -38,6 +38,10 @@
   flex-shrink: 0;
 }
 
+.global-input-container.generating {
+  background-color: rgba(0, 0 , 0, 0.035);
+}
+
 
 .global-input-form {
   width: 100%;
