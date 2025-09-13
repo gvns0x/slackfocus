@@ -569,12 +569,10 @@
 }
 
 .exit-mobile-redesign-btn {
-  background: #333333;
-  color: #ffffff;
+  background: rgba(0,0,0,.05);
   border: none;
-  border-radius: 50%;
-  width: 28px;
-  height: 28px;
+  border-radius: 8px;
+  padding: 6px 8px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -584,8 +582,13 @@
   font-weight: bold;
 }
 
+.restore-text {
+  color: rgba(0,0,0,.5);
+  font-weight: 600;
+}
+
 .exit-mobile-redesign-btn:hover {
-  background: #555555;
+  background: rgba(0,0,0,.1);
 }
 
 .exit-mobile-redesign-btn:active {

@@ -84,6 +84,9 @@ function ChatAppContent() {
         setShowLoadingBlobs(true);
       } else if (globalInputValue.toLowerCase().includes('mobile redesign')) {
         setUiVersion('mobile-redesign');
+        // Reset input focus states to ensure correct placeholder shows
+        setIsInputFocused(false);
+        setIsInputHovered(false);
         // Start mobile elements animation after a brief delay
         setTimeout(() => {
           setMobileElementsAnimating(true);
@@ -155,6 +158,9 @@ function ChatAppContent() {
       setIsFadingOut(false);
       setIsMinimized(false);
       setIsGeneratingInterface(false);
+      // Reset input focus states to ensure correct placeholder shows
+      setIsInputFocused(false);
+      setIsInputHovered(false);
       
       // Start mobile elements animation after a brief delay
       setTimeout(() => {
@@ -304,10 +310,10 @@ function ChatAppContent() {
               {!globalInputValue && !isGeneratingInterface && (
                 <div className={`animated-placeholder ${(isInputFocused || isInputHovered) && uiVersion === 'mobile-redesign' ? 'interactive' : 'default'}`}>
                   <div className="placeholder-text default-text">
-                    {uiVersion === 'mobile-redesign' ? "Focusing on the new mobile redesign project" : (selectedProject ? `Focusing on the ${selectedProject.name} project` : "What do you want to focus on?")}
+                    {uiVersion === 'mobile-redesign' ? "Focusing on the new mobile redesign" : (selectedProject ? `Focusing on the ${selectedProject.name} project` : "What do you want to focus on?")}
                   </div>
                   <div className="placeholder-text interactive-text">
-                    {uiVersion === 'mobile-redesign' ? "Focusing on the new mobile redesign project" : "What do you want to focus on?"}
+                    {uiVersion === 'mobile-redesign' ? "What do you want to focus on?" : "What do you want to focus on?"}
                   </div>
                 </div>
               )}
@@ -334,7 +340,7 @@ function ChatAppContent() {
                   onClick={() => setUiVersion('default')}
                   title="Exit mobile redesign mode"
                 >
-                  <span className="icon">×</span>
+                  <span className="icon restore-text">Restore</span>
                 </button>
               ) : globalInputValue.trim() ? (
                 <button type="submit" className="global-input-button">
