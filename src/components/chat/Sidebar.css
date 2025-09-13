@@ -27,6 +27,18 @@
   filter: blur(10px);
 }
 
+.sidebar.animating-in {
+  translate: 0% -50px;
+  opacity: 0;
+  filter: blur(10px);
+}
+
+.sidebar.animated-in {
+  translate: 0% 0px;
+  opacity: 1;
+  filter: blur(0px);
+}
+
 .sidebar-header {
   padding: 16px;
   background: #ffffff;

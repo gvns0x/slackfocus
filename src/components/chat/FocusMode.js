@@ -3,7 +3,7 @@ import { useFocus } from '../../contexts/FocusContext';
 import Avatar from '../common/Avatar';
 import './FocusMode.css';
 
-const FocusMode = ({ onChannelChange, currentChannel, isFadingOut }) => {
+const FocusMode = ({ onChannelChange, currentChannel, isFadingOut, isAnimating }) => {
   const { currentFocus, exitFocusMode } = useFocus();
 
   if (!currentFocus) return null;
@@ -17,7 +17,7 @@ const FocusMode = ({ onChannelChange, currentChannel, isFadingOut }) => {
   };
 
   return (
-    <div className={`focus-mode ${isFadingOut ? 'fading-out' : ''}`}>
+    <div className={`focus-mode ${isFadingOut ? 'fading-out' : ''} ${isAnimating ? 'animated-in' : 'animating-in'}`}>
       <div className="focus-header">
         <div className="focus-indicator">
           <div className="focus-info">

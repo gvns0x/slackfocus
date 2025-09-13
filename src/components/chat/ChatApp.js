@@ -30,9 +30,12 @@ function ChatAppContent() {
   const [animatedPlaceholder, setAnimatedPlaceholder] = useState("Generating a new interface...");
   const [mobileElementsAnimating, setMobileElementsAnimating] = useState(false);
   const [feedbackElementsAnimating, setFeedbackElementsAnimating] = useState(false);
+  const [defaultElementsAnimating, setDefaultElementsAnimating] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [isInputHovered, setIsInputHovered] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [showVersionDropdown, setShowVersionDropdown] = useState(false);
+  const [generatedVersions, setGeneratedVersions] = useState(new Set(['default'])); // Track which versions have been generated
   const chatAppMainRef = useRef(null);
   
   // Loading duration controls
@@ -136,6 +139,7 @@ function ChatAppContent() {
         setShowLoadingBlobs(true);
       } else if (globalInputValue.toLowerCase().includes('mobile redesign')) {
         setUiVersion('mobile-redesign');
+        setGeneratedVersions(prev => new Set([...prev, 'mobile-redesign']));
         // Reset input focus states to ensure correct placeholder shows
         setIsInputFocused(false);
         setIsInputHovered(false);
@@ -149,6 +153,11 @@ function ChatAppContent() {
         setUiVersion('default');
         setMobileElementsAnimating(false);
         setFeedbackElementsAnimating(false);
+        setDefaultElementsAnimating(false);
+        // Start default elements animation after a brief delay
+        setTimeout(() => {
+          setDefaultElementsAnimating(true);
+        }, 50);
         // Reset generating state after UI change
         setTimeout(() => setIsGeneratingInterface(false), 100);
       } else if (uiVersion === 'mobile-redesign') {
@@ -195,6 +204,64 @@ function ChatAppContent() {
     setSelectedImageIndex(index);
   };
 
+  // UI version options for dropdown - only show generated versions
+  const uiVersionOptions = [
+    { value: 'default', label: 'Default View' },
+    { value: 'mobile-redesign', label: 'Mobile Redesign' },
+    { value: 'feedback', label: 'Feedback View' }
+  ].filter(option => generatedVersions.has(option.value));
+
+  const handleVersionChange = (newVersion) => {
+    if (newVersion === uiVersion) {
+      setShowVersionDropdown(false);
+      return;
+    }
+
+    // Start fade out animation
+    setIsFadingOut(true);
+    
+    // After fade out completes, switch version and fade in
+    setTimeout(() => {
+      setUiVersion(newVersion);
+      setIsFadingOut(false);
+      setShowVersionDropdown(false);
+      
+      // Reset animation states
+      setMobileElementsAnimating(false);
+      setFeedbackElementsAnimating(false);
+      setDefaultElementsAnimating(false);
+      
+      // Start appropriate animations for the new version
+      setTimeout(() => {
+        if (newVersion === 'mobile-redesign') {
+          setMobileElementsAnimating(true);
+        } else if (newVersion === 'feedback') {
+          setFeedbackElementsAnimating(true);
+        } else if (newVersion === 'default') {
+          setDefaultElementsAnimating(true);
+        }
+      }, 50);
+    }, 300); // Match the CSS transition duration
+  };
+
+  const toggleVersionDropdown = () => {
+    setShowVersionDropdown(!showVersionDropdown);
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showVersionDropdown && !event.target.closest('.jump-to-container')) {
+        setShowVersionDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showVersionDropdown]);
+
 
   useEffect(() => {
     if (!showLoadingBlobs) return;
@@ -230,6 +297,9 @@ function ChatAppContent() {
       // Reset input focus states to ensure correct placeholder shows
       setIsInputFocused(false);
       setIsInputHovered(false);
+      
+      // Mark the target view as generated
+      setGeneratedVersions(prev => new Set([...prev, targetView]));
       
       // Start mobile elements animation after a brief delay (only for mobile-redesign)
       if (targetView === 'mobile-redesign') {
@@ -298,6 +368,7 @@ function ChatAppContent() {
               projectData={projectData}
               isMinimized={isMinimized}
               isFadingOut={isFadingOut}
+              isAnimating={defaultElementsAnimating}
             />
             {selectedProject ? (
               <ChatArea
@@ -306,12 +377,14 @@ function ChatAppContent() {
                 onSendMessage={addMessage}
                 isMinimized={isMinimized}
                 isFadingOut={isFadingOut}
+                isAnimating={defaultElementsAnimating}
               />
             ) : isFocusMode ? (
               <FocusMode
                 onChannelChange={setCurrentChannel}
                 currentChannel={currentChannel}
                 isFadingOut={isFadingOut}
+                isAnimating={defaultElementsAnimating}
               />
             ) : (
               <ChatArea
@@ -320,6 +393,7 @@ function ChatAppContent() {
                 onSendMessage={addMessage}
                 isMinimized={isMinimized}
                 isFadingOut={isFadingOut}
+                isAnimating={defaultElementsAnimating}
               />
             )}
           </div>
@@ -507,15 +581,31 @@ function ChatAppContent() {
                 >
                   <span className="icon">⏹</span>
                 </button>
-              ) : uiVersion === 'mobile-redesign' || uiVersion === 'feedback' ? (
-                <button 
-                  type="button" 
-                  className="exit-mobile-redesign-btn"
-                  onClick={() => setUiVersion('default')}
-                  title="Exit mobile redesign mode"
-                >
-                  <span className="icon restore-text">Restore</span>
-                </button>
+              ) : (uiVersion === 'mobile-redesign' || uiVersion === 'feedback' || (uiVersion === 'default' && generatedVersions.size > 1)) ? (
+                <div className="jump-to-container">
+                  <button 
+                    type="button" 
+                    className="jump-to-btn"
+                    onClick={toggleVersionDropdown}
+                    title="Jump to different UI version"
+                  >
+                    <span className="jump-to-text">Jump to</span>
+                    <span className="dropdown-arrow">▼</span>
+                  </button>
+                  {showVersionDropdown && (
+                    <div className="version-dropdown">
+                      {uiVersionOptions.map((option) => (
+                        <button
+                          key={option.value}
+                          className={`dropdown-option ${option.value === uiVersion ? 'active' : ''}`}
+                          onClick={() => handleVersionChange(option.value)}
+                        >
+                          {option.label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               ) : globalInputValue.trim() ? (
                 <button type="submit" className="global-input-button">
                   <span className="icon">➤</span>

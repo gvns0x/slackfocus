@@ -26,6 +26,18 @@
    filter: blur(10px);
 }
 
+.chat-area.animating-in {
+  translate: 0% -50px;
+  opacity: 0;
+  filter: blur(10px);
+}
+
+.chat-area.animated-in {
+  translate: 0% 0px;
+  opacity: 1;
+  filter: blur(0px);
+}
+
 .chat-header {
   height: 60px;
   border-bottom: .5px solid rgba(0,0,0,0.1);
