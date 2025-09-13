@@ -21,7 +21,7 @@ function ChatAppContent() {
   const [currentChannel, setCurrentChannel] = useState('general');
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
   const [globalInputValue, setGlobalInputValue] = useState('');
-  const [uiVersion, setUiVersion] = useState('default'); // 'default' or 'mobile-redesign'
+  const [uiVersion, setUiVersion] = useState('default'); // 'default', 'mobile-redesign', or 'feedback'
   const [isMinimized, setIsMinimized] = useState(false);
   const [showLoadingBlobs, setShowLoadingBlobs] = useState(false);
   const [loadingBlobsVisible, setLoadingBlobsVisible] = useState(false);
@@ -41,6 +41,35 @@ function ChatAppContent() {
     Mobile3,
     Mobile4,
     Mobile5
+  ];
+
+  // Comments data for each design
+  const designComments = [
+    [
+      { id: 1, user: 'Sarah Chen', text: 'Love the clean layout! The spacing feels much better than the previous version.', timestamp: '2:30 PM', avatar: 'SC' },
+      { id: 2, user: 'Mike Johnson', text: 'The navigation is intuitive. Great work on the user flow.', timestamp: '2:32 PM', avatar: 'MJ' },
+      { id: 3, user: 'Alex Rodriguez', text: 'Could we add more contrast to the primary buttons?', timestamp: '2:35 PM', avatar: 'AR' }
+    ],
+    [
+      { id: 1, user: 'Emma Wilson', text: 'This color scheme is perfect for our brand guidelines.', timestamp: '3:15 PM', avatar: 'EW' },
+      { id: 2, user: 'David Kim', text: 'The typography hierarchy is much clearer now.', timestamp: '3:17 PM', avatar: 'DK' },
+      { id: 3, user: 'Lisa Park', text: 'Maybe we could reduce the padding on mobile?', timestamp: '3:20 PM', avatar: 'LP' }
+    ],
+    [
+      { id: 1, user: 'Tom Hanks', text: 'The card design is really modern. I like the subtle shadows.', timestamp: '4:00 PM', avatar: 'TH' },
+      { id: 2, user: 'Chris Brown', text: 'This layout will work great for our content-heavy pages.', timestamp: '4:02 PM', avatar: 'CB' },
+      { id: 3, user: 'Sarah Chen', text: 'The responsive behavior looks solid across devices.', timestamp: '4:05 PM', avatar: 'SC' }
+    ],
+    [
+      { id: 1, user: 'Mike Johnson', text: 'The form design is much more user-friendly now.', timestamp: '4:30 PM', avatar: 'MJ' },
+      { id: 2, user: 'Alex Rodriguez', text: 'Great use of whitespace. It feels less cluttered.', timestamp: '4:32 PM', avatar: 'AR' },
+      { id: 3, user: 'Emma Wilson', text: 'The error states are handled really well here.', timestamp: '4:35 PM', avatar: 'EW' }
+    ],
+    [
+      { id: 1, user: 'David Kim', text: 'This dashboard layout is exactly what we needed.', timestamp: '5:00 PM', avatar: 'DK' },
+      { id: 2, user: 'Lisa Park', text: 'The data visualization components look professional.', timestamp: '5:02 PM', avatar: 'LP' },
+      { id: 3, user: 'Tom Hanks', text: 'Perfect balance between functionality and aesthetics.', timestamp: '5:05 PM', avatar: 'TH' }
+    ]
   ];
 
   const { isFocusMode, selectedProject, getProjectData } = useFocus();
@@ -116,6 +145,9 @@ function ChatAppContent() {
         setMobileElementsAnimating(false);
         // Reset generating state after UI change
         setTimeout(() => setIsGeneratingInterface(false), 100);
+      } else if (uiVersion === 'mobile-redesign') {
+        // If we're in mobile redesign and user submits a prompt, show loading and transition to feedback view
+        setShowLoadingBlobs(true);
       } else {
         // For other prompts, reset generating state after a delay
         setTimeout(() => setIsGeneratingInterface(false), 2000);
@@ -161,10 +193,13 @@ function ChatAppContent() {
   useEffect(() => {
     if (!showLoadingBlobs) return;
 
+    // For default view, we need the main element for fade-out
+    // For mobile redesign view, we can show LoadingBlobs immediately
     const main = chatAppMainRef.current;
-    if (!main) return;
+    
+    if (uiVersion === 'default' && !main) return;
 
-    // Start the CSS fade-out
+    // Start the CSS fade-out for both default and mobile redesign views
     setIsFadingOut(true);
 
     // Show LoadingBlobs after 1 second (when CSS transition completes)
@@ -172,9 +207,12 @@ function ChatAppContent() {
       setLoadingBlobsVisible(true);
     }, 100);
 
-    // After 7 more seconds, show mobile redesign
-    const showMobileTimer = setTimeout(() => {
-      setUiVersion('mobile-redesign');
+    // Determine which view to transition to based on current UI version
+    const targetView = uiVersion === 'mobile-redesign' ? 'feedback' : 'mobile-redesign';
+    
+    // After 7 more seconds, show the target view
+    const showTargetTimer = setTimeout(() => {
+      setUiVersion(targetView);
       setShowLoadingBlobs(false);
       setLoadingBlobsVisible(false);
       setIsFadingOut(false);
@@ -184,17 +222,19 @@ function ChatAppContent() {
       setIsInputFocused(false);
       setIsInputHovered(false);
       
-      // Start mobile elements animation after a brief delay
-      setTimeout(() => {
-        setMobileElementsAnimating(true);
-      }, 50);
-    }, 8000); // 1 second fade + 7 seconds wait
+      // Start mobile elements animation after a brief delay (only for mobile-redesign)
+      if (targetView === 'mobile-redesign') {
+        setTimeout(() => {
+          setMobileElementsAnimating(true);
+        }, 50);
+      }
+    }, 8000); // 1 second fade + 7 seconds wait for both views
 
     return () => {
       clearTimeout(showBlobsTimer);
-      clearTimeout(showMobileTimer);
+      clearTimeout(showTargetTimer);
     };
-  }, [showLoadingBlobs]);
+  }, [showLoadingBlobs, uiVersion]);
 
   // Reset states when showLoadingBlobs changes
   useEffect(() => {
@@ -275,7 +315,7 @@ function ChatAppContent() {
         <div className="ui-version-mobile-redesign">
           <div className="mobile-redesign-layout">
             {/* Top Navigation Bar */}
-            <div className={`mobile-nav-bar ${mobileElementsAnimating ? 'animated-in' : 'animating-in'}`}>
+            <div className={`mobile-nav-bar ${mobileElementsAnimating ? 'animated-in' : 'animating-in'} ${isFadingOut ? 'fading-out' : ''}`}>
               <div className="nav-left">
                 <div className="workspace-info">
                   <Avatar userInitials="SF" size="medium" className="workspace-avatar" />
@@ -290,7 +330,7 @@ function ChatAppContent() {
             </div>
             
             {/* Main Content Area */}
-            <div className={`mobile-main-content ${mobileElementsAnimating ? 'animated-in' : 'animating-in'}`}>
+            <div className={`mobile-main-content ${mobileElementsAnimating ? 'animated-in' : 'animating-in'} ${isFadingOut ? 'fading-out' : ''}`}>
             
               
               <div className="file-display-area">
@@ -324,12 +364,92 @@ function ChatAppContent() {
           </div>
         </div>
       )}
+
+      {/* FEEDBACK VIEW UI VERSION */}
+      {uiVersion === 'feedback' && (
+        <div className="ui-version-feedback">
+          <div className="feedback-layout">
+            {/* Top Navigation Bar */}
+            <div className="mobile-nav-bar animated-in">
+              <div className="nav-left">
+                <div className="workspace-info">
+                  <Avatar userInitials="SF" size="medium" className="workspace-avatar" />
+                  <div className="workspace-name">Acme</div>
+                </div>
+                <div className="nav-tabs">
+                  <div className="nav-tab active">Design feedback</div>
+                  <div className="nav-tab dropd">CHANNELS ▾</div>
+                  <div className="nav-tab dropd">PEOPLE ▾</div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Main Content Area with Flex Row Layout */}
+            <div className="feedback-main-content">
+              {/* Left side - Mobile main content */}
+              <div className="mobile-main-content animated-in">
+                <div className="file-display-area">
+                  {/* Large main file placeholder */}
+                  <div className="main-file-placeholder">
+                    <img 
+                      src={placeholderImages[selectedImageIndex]} 
+                      alt={`Selected image ${selectedImageIndex + 1}`}
+                      className="main-display-image"
+                    />
+                  </div>
+                  
+                  {/* File thumbnails below */}
+                  <div className="file-thumbnails-row">
+                    {placeholderImages.map((image, index) => (
+                      <div 
+                        key={index}
+                        className={`file-thumbnail ${selectedImageIndex === index ? 'selected' : ''}`}
+                        onClick={() => handleThumbnailClick(index)}
+                      >
+                        <img 
+                          src={image} 
+                          alt={`Thumbnail ${index + 1}`}
+                          className="thumbnail-image"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Right side - Comments section */}
+              <div className="comments-section">
+                <div className="comments-header">
+                  <h3>Design Feedback</h3>
+                  <div className="comments-count">{designComments[selectedImageIndex].length} comments</div>
+                </div>
+                <div className="comments-list">
+                  {designComments[selectedImageIndex].map((comment) => (
+                    <div key={comment.id} className="comment-item">
+                      <div className="comment-avatar">
+                        <Avatar userInitials={comment.avatar} size="small" />
+                      </div>
+                      <div className="comment-content">
+                        <div className="comment-header">
+                          <span className="comment-user">{comment.user}</span>
+                          <span className="comment-timestamp">{comment.timestamp}</span>
+                        </div>
+                        <div className="comment-text">{comment.text}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       
       {/* Global Input Field - Always visible */}
-      <div className={`global-input-container ${uiVersion === 'mobile-redesign' ? 'mobile-redesign-input' : ''} ${isGeneratingInterface ? 'generating' : ''}`}>
+      <div className={`global-input-container ${uiVersion === 'mobile-redesign' || uiVersion === 'feedback' ? 'mobile-redesign-input' : ''} ${isGeneratingInterface ? 'generating' : ''}`}>
         <form onSubmit={handleGlobalInputSubmit} className="global-input-form">
           <div 
-            className={`global-input-wrapper ${uiVersion === 'mobile-redesign' ? 'mobile-redesign-wrapper' : ''} ${isGeneratingInterface ? 'generating' : ''}`}
+            className={`global-input-wrapper ${uiVersion === 'mobile-redesign' || uiVersion === 'feedback' ? 'mobile-redesign-wrapper' : ''} ${isGeneratingInterface ? 'generating' : ''}`}
             onMouseEnter={handleInputMouseEnter}
             onMouseLeave={handleInputMouseLeave}
           >
@@ -341,15 +461,17 @@ function ChatAppContent() {
                 onFocus={handleInputFocus}
                 onBlur={handleInputBlur}
                 disabled={isGeneratingInterface}
-                className={`global-input ${uiVersion === 'mobile-redesign' ? 'mobile-redesign-input-field' : ''} ${isGeneratingInterface ? 'generating' : ''}`}
+                className={`global-input ${uiVersion === 'mobile-redesign' || uiVersion === 'feedback' ? 'mobile-redesign-input-field' : ''} ${isGeneratingInterface ? 'generating' : ''}`}
               />
               {!globalInputValue && !isGeneratingInterface && (
-                <div className={`animated-placeholder ${(isInputFocused || isInputHovered) && uiVersion === 'mobile-redesign' ? 'interactive' : 'default'}`}>
+                <div className={`animated-placeholder ${(isInputFocused || isInputHovered) && (uiVersion === 'mobile-redesign' || uiVersion === 'feedback') ? 'interactive' : 'default'}`}>
                   <div className="placeholder-text default-text">
-                    {uiVersion === 'mobile-redesign' ? "Focusing on the new mobile redesign" : (selectedProject ? `Focusing on the ${selectedProject.name} project` : "What do you want to focus on?")}
+                    {uiVersion === 'mobile-redesign' ? "Focusing on the new mobile redesign" : 
+                     uiVersion === 'feedback' ? "Reviewing design feedback" :
+                     (selectedProject ? `Focusing on the ${selectedProject.name} project` : "What do you want to focus on?")}
                   </div>
                   <div className="placeholder-text interactive-text">
-                    {uiVersion === 'mobile-redesign' ? "What do you want to focus on?" : "What do you want to focus on?"}
+                    {uiVersion === 'mobile-redesign' || uiVersion === 'feedback' ? "What do you want to focus on?" : "What do you want to focus on?"}
                   </div>
                 </div>
               )}
@@ -369,7 +491,7 @@ function ChatAppContent() {
                 >
                   <span className="icon">⏹</span>
                 </button>
-              ) : uiVersion === 'mobile-redesign' ? (
+              ) : uiVersion === 'mobile-redesign' || uiVersion === 'feedback' ? (
                 <button 
                   type="button" 
                   className="exit-mobile-redesign-btn"
