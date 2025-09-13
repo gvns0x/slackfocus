@@ -132,28 +132,6 @@ function ChatAppContent() {
     setIsFadingOut(false);
   };
 
-  const getPlaceholderText = () => {
-    if (isGeneratingInterface) {
-      return animatedPlaceholder;
-    }
-    
-    const isInteractive = isInputFocused || isInputHovered;
-    
-    if (uiVersion === 'mobile-redesign') {
-      if (isInteractive) {
-        return "What do you want to focus on?";
-      } else {
-        return "Focusing on the Mobile redesign project";
-      }
-    }
-    
-    // Default UI version
-    if (isInteractive) {
-      return "What do you want to focus on?";
-    } else {
-      return selectedProject ? `Focusing on the ${selectedProject.name} project` : "What do you want to focus on?";
-    }
-  };
 
   useEffect(() => {
     if (!showLoadingBlobs) return;
@@ -313,16 +291,32 @@ function ChatAppContent() {
             onMouseEnter={handleInputMouseEnter}
             onMouseLeave={handleInputMouseLeave}
           >
-            <input
-              type="text"
-              value={globalInputValue}
-              onChange={handleGlobalInputChange}
-              onFocus={handleInputFocus}
-              onBlur={handleInputBlur}
-              disabled={isGeneratingInterface}
-              placeholder={getPlaceholderText()}
-              className={`global-input ${uiVersion === 'mobile-redesign' ? 'mobile-redesign-input-field' : ''} ${isGeneratingInterface ? 'generating' : ''}`}
-            />
+            <div className="input-with-animated-placeholder">
+              <input
+                type="text"
+                value={globalInputValue}
+                onChange={handleGlobalInputChange}
+                onFocus={handleInputFocus}
+                onBlur={handleInputBlur}
+                disabled={isGeneratingInterface}
+                className={`global-input ${uiVersion === 'mobile-redesign' ? 'mobile-redesign-input-field' : ''} ${isGeneratingInterface ? 'generating' : ''}`}
+              />
+              {!globalInputValue && !isGeneratingInterface && (
+                <div className={`animated-placeholder ${(isInputFocused || isInputHovered) && uiVersion === 'mobile-redesign' ? 'interactive' : 'default'}`}>
+                  <div className="placeholder-text default-text">
+                    {uiVersion === 'mobile-redesign' ? "Focusing on the new mobile redesign project" : (selectedProject ? `Focusing on the ${selectedProject.name} project` : "What do you want to focus on?")}
+                  </div>
+                  <div className="placeholder-text interactive-text">
+                    {uiVersion === 'mobile-redesign' ? "Focusing on the new mobile redesign project" : "What do you want to focus on?"}
+                  </div>
+                </div>
+              )}
+              {!globalInputValue && isGeneratingInterface && (
+                <div className="generating-placeholder">
+                  {animatedPlaceholder}
+                </div>
+              )}
+            </div>
             <div className="global-input-actions">
               {isGeneratingInterface ? (
                 <button 

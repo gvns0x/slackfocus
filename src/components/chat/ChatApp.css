@@ -39,7 +39,7 @@
 }
 
 .global-input-container.generating {
-  background-color: rgba(0, 0 , 0, 0.035);
+  background-color: #eaeaea;
 }
 
 
@@ -93,20 +93,98 @@
   color: #6c757d;
 }
 
+/* Animated Placeholder Styles */
+.input-with-animated-placeholder {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.animated-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.placeholder-text {
+  position: absolute;
+  width: 100%;
+  color: #6c757d;
+  font-size: 14px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.placeholder-text.default-text {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.placeholder-text.interactive-text {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+.animated-placeholder.interactive .placeholder-text.default-text {
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+.animated-placeholder.interactive .placeholder-text.interactive-text {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.generating-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  color: #6c757d;
+  font-size: 14px;
+  background: linear-gradient(
+    90deg,
+    rgba(0,0,0,0.6) 0%,
+    rgba(0,0,0,0.6) 20%,
+    rgba(0,0,0,0.6) 40%,
+    rgba(0,0,0,.1) 60%,
+    rgba(0,0,0,0.6) 80%,
+    rgba(0,0,0,0.6) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: whiteMask 4s ease-in-out infinite;
+}
+
 /* White mask animation for generating interface text */
 @keyframes whiteMask {
   0% {
-    background-position: -100% 0;
+    background-position: 200% 0;
   }
   100% {
-    background-position: 100% 0;
+    background-position: -200% 0;
   }
 }
 
 .global-input.generating::placeholder {
   background: linear-gradient(
     90deg,
-    #6c757d 0%,
+    red 0%,
     #6c757d 20%,
     #ffffff 40%,
     #ffffff 60%,
@@ -426,57 +504,57 @@
 
 /* MOBILE REDESIGN INPUT STYLES */
 .mobile-redesign-input .global-input-container {
-  background-color: #000000;
+  background-color: #ffffff;
   border-top: none;
   transition: background-color 0.3s ease;
 }
 
 .mobile-redesign-input .global-input-container.generating {
-  background-color: #ff0000;
+  background-color: rgba(0, 0 , 0, 0.035);
 }
 
 .mobile-redesign-wrapper {
-  background-color: #000000;
-  border: 1px solid #333333;
+  background-color: #fff;
+  border: none;
   transition: background-color 0.3s ease;
 }
 
 .mobile-redesign-wrapper.generating {
-  background-color: #ff0000;
+  background-color: rgba(0, 0, 0, .01);
 }
 
 .mobile-redesign-wrapper:hover {
-  border-color: #555555;
+  box-shadow: 0 0 0 1.5px rgba(0, 0 , 0, 0.15);
 }
 
 .mobile-redesign-wrapper:focus-within {
-  border-color: #007bff;
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  box-shadow: 0 0 0 1.5px rgba(0, 0, 0, 0.15);
 }
 
 .mobile-redesign-input-field {
-  color: #ffffff;
+  color: #333;
 }
 
 .mobile-redesign-input-field::placeholder {
-  color: #999999;
+  color: #6c757d;
 }
 
 /* Ensure white mask effect works in mobile redesign mode too */
 .mobile-redesign-input-field.generating::placeholder {
   background: linear-gradient(
     90deg,
-    #999999 0%,
-    #999999 30%,
-    #ffffff 50%,
-    #999999 70%,
-    #999999 100%
+    #6c757d 0%,
+    #6c757d 20%,
+    #ffffff 40%,
+    #ffffff 60%,
+    #6c757d 80%,
+    #6c757d 100%
   );
-  background-size: 200% 100%;
+  background-size: 300% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: whiteMask 1.5s ease-in-out infinite;
+  animation: whiteMask 2s ease-in-out infinite;
   color: transparent !important;
   display: inline-block;
 }
