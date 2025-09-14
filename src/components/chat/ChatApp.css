@@ -12,6 +12,10 @@
   background-color: rgba(0,0,0,0.05);
   gap: 4px;
   box-shadow: rgba(0,0,0,.035) 0px 0px 50px ;
+  /* background-image: url('../../imgs/gradientBg.png');
+  background-size: 600px 600px;
+  background-position: center;
+  background-repeat: no-repeat; */
 }
 
 .chat-app-main {
@@ -37,6 +41,8 @@
   border-radius: 20px;
   height: 54px;
   flex-shrink: 0;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
 }
 
 .global-input-container.generating {
