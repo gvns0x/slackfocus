@@ -50,7 +50,7 @@ const Sidebar = ({ channels, currentChannel, onChannelChange, projectData, isMin
   const people = projectData ? projectData.people : defaultPeople;
 
   return (
-    <div className={`sidebar ${isMinimized ? 'minimize' : ''} ${isFadingOut ? 'fading-out' : ''} ${isAnimating ? 'animated-in' : 'animating-in'}`}>
+    <div className={`sidebar ${isMinimized ? 'minimize' : ''} ${isFadingOut ? 'fading-out' : ''} ${isAnimating ? 'animating-in' : 'animated-in'}`}>
       <div className="sidebar-header">
         <div className="workspace-info">
           <Avatar userInitials="SF" size="medium" className="workspace-avatar" />

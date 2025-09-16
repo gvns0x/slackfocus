@@ -28,9 +28,9 @@ function ChatAppContent() {
   const [isFadingOut, setIsFadingOut] = useState(false);
   const [isGeneratingInterface, setIsGeneratingInterface] = useState(false);
   const [animatedPlaceholder, setAnimatedPlaceholder] = useState("Generating a new interface...");
-  const [mobileElementsAnimating, setMobileElementsAnimating] = useState(false);
-  const [feedbackElementsAnimating, setFeedbackElementsAnimating] = useState(false);
-  const [defaultElementsAnimating, setDefaultElementsAnimating] = useState(true);
+  const [mobileElementsAnimating, setMobileElementsAnimating] = useState(true); // Start as true to prevent initial flash
+  const [feedbackElementsAnimating, setFeedbackElementsAnimating] = useState(true); // Start as true to prevent initial flash
+  const [defaultElementsAnimating, setDefaultElementsAnimating] = useState(true); // Start as true to prevent initial flash
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [isInputHovered, setIsInputHovered] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
@@ -134,22 +134,17 @@ function ChatAppContent() {
       // Set generating state for any prompt
       setIsGeneratingInterface(true);
       
-      // For any text input in default view, trigger the loading sequence
+      // Handle UI transitions based on current version
       if (uiVersion === 'default') {
+        // From default: any prompt should trigger loading → mobile redesign
+        console.log('🚀 Triggering loading sequence from default to mobile-redesign');
         setShowLoadingBlobs(true);
-      } else if (globalInputValue.toLowerCase().includes('mobile redesign')) {
-        setUiVersion('mobile-redesign');
-        setGeneratedVersions(prev => new Set([...prev, 'mobile-redesign']));
-        // Reset input focus states to ensure correct placeholder shows
-        setIsInputFocused(false);
-        setIsInputHovered(false);
-        // Start mobile elements animation after a brief delay
-        setTimeout(() => {
-          setMobileElementsAnimating(true);
-        }, 50);
-        // Reset generating state after UI change
-        setTimeout(() => setIsGeneratingInterface(false), 100);
+      } else if (uiVersion === 'mobile-redesign') {
+        // From mobile redesign: any prompt should trigger loading → feedback
+        console.log('🚀 Triggering loading sequence from mobile-redesign to feedback');
+        setShowLoadingBlobs(true);
       } else if (globalInputValue.toLowerCase().includes('default') || globalInputValue.toLowerCase().includes('back to normal')) {
+        // Direct transition to default (for jump functionality)
         setUiVersion('default');
         setMobileElementsAnimating(false);
         setFeedbackElementsAnimating(false);
@@ -157,12 +152,11 @@ function ChatAppContent() {
         // Start default elements animation after a brief delay
         setTimeout(() => {
           setDefaultElementsAnimating(true);
+          // Reset animation state after animation completes (300ms)
+          setTimeout(() => setDefaultElementsAnimating(false), 300);
         }, 50);
         // Reset generating state after UI change
         setTimeout(() => setIsGeneratingInterface(false), 100);
-      } else if (uiVersion === 'mobile-redesign') {
-        // If we're in mobile redesign and user submits a prompt, show loading and transition to feedback view
-        setShowLoadingBlobs(true);
       } else {
         // For other prompts, reset generating state after a delay
         setTimeout(() => setIsGeneratingInterface(false), 2000);
@@ -226,19 +220,22 @@ function ChatAppContent() {
       setIsFadingOut(false);
       setShowVersionDropdown(false);
       
-      // Reset animation states
-      setMobileElementsAnimating(false);
-      setFeedbackElementsAnimating(false);
-      setDefaultElementsAnimating(false);
+      // Reset animation states - set to true to keep elements hidden during transition
+      setMobileElementsAnimating(true);
+      setFeedbackElementsAnimating(true);
+      setDefaultElementsAnimating(true);
       
       // Start appropriate animations for the new version
       setTimeout(() => {
         if (newVersion === 'mobile-redesign') {
           setMobileElementsAnimating(true);
+          setTimeout(() => setMobileElementsAnimating(false), 50);
         } else if (newVersion === 'feedback') {
           setFeedbackElementsAnimating(true);
+          setTimeout(() => setFeedbackElementsAnimating(false), 50);
         } else if (newVersion === 'default') {
           setDefaultElementsAnimating(true);
+          setTimeout(() => setDefaultElementsAnimating(false), 300);
         }
       }, 50);
     }, 300); // Match the CSS transition duration
@@ -266,19 +263,26 @@ function ChatAppContent() {
   useEffect(() => {
     if (!showLoadingBlobs) return;
 
+    console.log('🔄 Loading sequence started, current UI:', uiVersion);
+    
     // For default view, we need the main element for fade-out
     // For mobile redesign view, we can show LoadingBlobs immediately
     const main = chatAppMainRef.current;
     
-    if (uiVersion === 'default' && !main) return;
+    if (uiVersion === 'default' && !main) {
+      console.log('❌ Main ref not found for default UI');
+      return;
+    }
 
     // Start the CSS fade-out for both default and mobile redesign views
+    console.log('⬇️ Starting fade-out transition');
     setIsFadingOut(true);
 
-    // Show LoadingBlobs after CSS transition completes (300ms for opacity + buffer)
+    // Show LoadingBlobs after 1 second (when CSS transition completes)
     const showBlobsTimer = setTimeout(() => {
+      console.log('🔮 Loading blobs now visible');
       setLoadingBlobsVisible(true);
-    }, 400);
+    }, 100);
 
     // Determine which view to transition to based on current UI version
     const targetView = uiVersion === 'mobile-redesign' ? 'feedback' : 'mobile-redesign';
@@ -286,8 +290,11 @@ function ChatAppContent() {
     // Determine loading duration based on current UI version
     const loadingDuration = uiVersion === 'default' ? firstLoadingDuration : secondLoadingDuration;
     
+    console.log(`⏱️ Loading duration: ${loadingDuration}s, transitioning to: ${targetView}`);
+    
     // After the specified duration, show the target view
     const showTargetTimer = setTimeout(() => {
+      console.log(`✅ Loading complete! Switching to ${targetView}`);
       setUiVersion(targetView);
       setShowLoadingBlobs(false);
       setLoadingBlobsVisible(false);
@@ -303,16 +310,20 @@ function ChatAppContent() {
       
       // Start mobile elements animation after a brief delay (only for mobile-redesign)
       if (targetView === 'mobile-redesign') {
+        // Keep elements hidden initially, then animate in
+        setMobileElementsAnimating(true);
         setTimeout(() => {
-          setMobileElementsAnimating(true);
-        }, 50);
+          setMobileElementsAnimating(false);
+        }, 50); // Quick transition to animated-in state
       }
       
       // Start feedback elements animation after a brief delay (only for feedback)
       if (targetView === 'feedback') {
+        // Keep elements hidden initially, then animate in
+        setFeedbackElementsAnimating(true);
         setTimeout(() => {
-          setFeedbackElementsAnimating(true);
-        }, 50);
+          setFeedbackElementsAnimating(false);
+        }, 50); // Quick transition to animated-in state
       }
     }, loadingDuration * 1000); // Convert seconds to milliseconds
 
@@ -346,6 +357,24 @@ function ChatAppContent() {
 
     return () => clearInterval(interval);
   }, [isGeneratingInterface]);
+
+  // Ensure component starts in a clean state
+  useEffect(() => {
+    // Reset any problematic states on mount
+    setIsFadingOut(false);
+    setShowLoadingBlobs(false);
+    setLoadingBlobsVisible(false);
+    setIsGeneratingInterface(false);
+    // Keep all elements hidden initially to prevent flash
+    setMobileElementsAnimating(true);
+    setFeedbackElementsAnimating(true);
+    setDefaultElementsAnimating(true);
+    
+    // Show default UI elements after a brief delay since we start with default UI
+    setTimeout(() => {
+      setDefaultElementsAnimating(false);
+    }, 50);
+  }, []);
 
   return (
     <div className={`chat-app ${isProjectModalOpen ? 'chat-app--modal-open' : ''}`}>
@@ -405,7 +434,7 @@ function ChatAppContent() {
         <div className="ui-version-mobile-redesign">
           <div className="mobile-redesign-layout">
             {/* Top Navigation Bar */}
-            <div className={`mobile-nav-bar ${mobileElementsAnimating ? 'animated-in' : 'animating-in'} ${isFadingOut ? 'fading-out' : ''}`}>
+            <div className={`mobile-nav-bar ${mobileElementsAnimating ? 'animating-in' : 'animated-in'} ${isFadingOut ? 'fading-out' : ''}`}>
               <div className="nav-left">
                 <div className="workspace-info">
                   <Avatar userInitials="SF" size="medium" className="workspace-avatar" />
@@ -420,7 +449,7 @@ function ChatAppContent() {
             </div>
             
             {/* Main Content Area */}
-            <div className={`mobile-main-content ${mobileElementsAnimating ? 'animated-in' : 'animating-in'} ${isFadingOut ? 'fading-out' : ''}`}>
+            <div className={`mobile-main-content ${mobileElementsAnimating ? 'animating-in' : 'animated-in'} ${isFadingOut ? 'fading-out' : ''}`}>
             
               
               <div className="file-display-area">
@@ -460,7 +489,7 @@ function ChatAppContent() {
         <div className="ui-version-feedback">
           <div className="feedback-layout">
             {/* Top Navigation Bar */}
-            <div className={`mobile-nav-bar ${feedbackElementsAnimating ? 'animated-in' : 'animating-in'} ${isFadingOut ? 'fading-out' : ''}`}>
+            <div className={`mobile-nav-bar ${feedbackElementsAnimating ? 'animating-in' : 'animated-in'} ${isFadingOut ? 'fading-out' : ''}`}>
               <div className="nav-left">
                 <div className="workspace-info">
                   <Avatar userInitials="SF" size="medium" className="workspace-avatar" />
@@ -477,7 +506,7 @@ function ChatAppContent() {
             {/* Main Content Area with Flex Row Layout */}
             <div className="feedback-main-content">
               {/* Left side - Mobile main content */}
-              <div className={`mobile-main-content ${feedbackElementsAnimating ? 'animated-in' : 'animating-in'} ${isFadingOut ? 'fading-out' : ''}`}>
+              <div className={`mobile-main-content ${feedbackElementsAnimating ? 'animating-in' : 'animated-in'} ${isFadingOut ? 'fading-out' : ''}`}>
                 <div className="file-display-area">
                   {/* Large main file placeholder */}
                   <div className="main-file-placeholder">
@@ -508,7 +537,7 @@ function ChatAppContent() {
               </div>
 
               {/* Right side - Comments section */}
-              <div className={`comments-section ${feedbackElementsAnimating ? 'animated-in' : 'animating-in'} ${isFadingOut ? 'fading-out' : ''}`}>
+              <div className={`comments-section ${feedbackElementsAnimating ? 'animating-in' : 'animated-in'} ${isFadingOut ? 'fading-out' : ''}`}>
                 <div className="comments-header">
                   <h3>Design Feedback</h3>
                   <div className="comments-count">{designComments[selectedImageIndex].length} comments</div>
@@ -556,8 +585,8 @@ function ChatAppContent() {
               {!globalInputValue && !isGeneratingInterface && (
                 <div className={`animated-placeholder ${(isInputFocused || isInputHovered) && (uiVersion === 'mobile-redesign' || uiVersion === 'feedback') ? 'interactive' : 'default'}`}>
                   <div className="placeholder-text default-text">
-                    {uiVersion === 'mobile-redesign' ? "Focusing on the new mobile redesign" : 
-                     uiVersion === 'feedback' ? "Reviewing design feedback" :
+                    {uiVersion === 'mobile-redesign' ? "Focusing on the mobile redesign screens" : 
+                     uiVersion === 'feedback' ? "Reviewing design feedback for mobile redesign screens" :
                      (selectedProject ? `Focusing on the ${selectedProject.name} project` : "What do you want to focus on?")}
                   </div>
                   <div className="placeholder-text interactive-text">

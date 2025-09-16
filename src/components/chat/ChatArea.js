@@ -31,7 +31,7 @@ const ChatArea = ({ channel, messages, onSendMessage, isMinimized, isFadingOut, 
   // Show focusing state when a project is selected
   if (selectedProject) {
     return (
-      <div className={`chat-area ${isMinimized ? 'minimize' : ''} ${isFadingOut ? 'fading-out' : ''} ${isAnimating ? 'animated-in' : 'animating-in'}`}>
+      <div className={`chat-area ${isMinimized ? 'minimize' : ''} ${isFadingOut ? 'fading-out' : ''} ${isAnimating ? 'animating-in' : 'animated-in'}`}>
         <div className="chat-header">
           <div className="channel-info">
             <span className="channel-name">Focus Mode</span>
@@ -56,7 +56,7 @@ const ChatArea = ({ channel, messages, onSendMessage, isMinimized, isFadingOut, 
   }
 
   return (
-    <div className={`chat-area ${isFadingOut ? 'fading-out' : ''} ${isAnimating ? 'animated-in' : 'animating-in'}`}>
+    <div className={`chat-area ${isFadingOut ? 'fading-out' : ''} ${isAnimating ? 'animating-in' : 'animated-in'}`}>
       <div className="chat-header">
         <div className="channel-info">
           <span className="channel-name">{channel}</span>

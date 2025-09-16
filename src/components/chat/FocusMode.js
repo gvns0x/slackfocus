@@ -17,7 +17,7 @@ const FocusMode = ({ onChannelChange, currentChannel, isFadingOut, isAnimating }
   };
 
   return (
-    <div className={`focus-mode ${isFadingOut ? 'fading-out' : ''} ${isAnimating ? 'animated-in' : 'animating-in'}`}>
+    <div className={`focus-mode ${isFadingOut ? 'fading-out' : ''} ${isAnimating ? 'animating-in' : 'animated-in'}`}>
       <div className="focus-header">
         <div className="focus-indicator">
           <div className="focus-info">

@@ -12,10 +12,10 @@
   /* box-shadow: -4px 4px 20px rgba(0, 0, 0, 0.15); */
   z-index: 10;
   border-radius: 20px;
-  /* Initial values for smooth transitions */
-  translate: 0% 0px;
-  opacity: 1;
-  filter: blur(0px);
+  /* Initial values for smooth transitions - start hidden to prevent flash */
+  translate: 0% -50px;
+  opacity: 0;
+  filter: blur(10px);
   transition:
   opacity .3s ease-out,
   /* scale .4s ease-out, */
