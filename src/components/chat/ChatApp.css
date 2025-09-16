@@ -234,7 +234,7 @@
 }
 
 .global-input-button {
-  background: #007bff;
+  background: #000;
   color: white;
   border: none;
   border-radius: 50%;
@@ -249,11 +249,15 @@
 }
 
 .global-input-button:hover {
-  background: green;
+  background: rgba(0,0,0,.8);
 }
 
 .global-input-button:active {
   transform: scale(0.95);
+}
+
+.global-input-button .icon {
+  color: #fff;
 }
 
 /* UI VERSION CONTAINERS */

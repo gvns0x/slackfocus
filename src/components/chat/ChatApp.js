@@ -637,7 +637,7 @@ function ChatAppContent() {
                 </div>
               ) : globalInputValue.trim() ? (
                 <button type="submit" className="global-input-button">
-                  <span className="icon">➤</span>
+                  <span className="icon">→</span>
                 </button>
               ) : (
                 <span></span>
