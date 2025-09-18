@@ -39,7 +39,7 @@ function ChatAppContent() {
   const chatAppMainRef = useRef(null);
   
   // Loading duration controls
-  const [firstLoadingDuration, setFirstLoadingDuration] = useState(8); // Duration for default -> mobile-redesign
+  const [firstLoadingDuration, setFirstLoadingDuration] = useState(5.5); // Duration for default -> mobile-redesign
   const [secondLoadingDuration, setSecondLoadingDuration] = useState(3.5); // ⚠️ CHANGE THIS VALUE TO CONTROL SECOND LOADING DURATION (mobile-redesign -> feedback)
 
   // Placeholder images for the file thumbnails
@@ -539,8 +539,8 @@ function ChatAppContent() {
               {/* Right side - Comments section */}
               <div className={`comments-section ${feedbackElementsAnimating ? 'animating-in' : 'animated-in'} ${isFadingOut ? 'fading-out' : ''}`}>
                 <div className="comments-header">
-                  <h3>Design Feedback</h3>
-                  <div className="comments-count">{designComments[selectedImageIndex].length} comments</div>
+                  <h3>Feedback</h3>
+                  
                 </div>
                 <div className="comments-list">
                   {designComments[selectedImageIndex].map((comment) => (
